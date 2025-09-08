@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:extensions="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:helpers="clr-namespace:Ang7.Helpers" xmlns:system="clr-namespace:System;assembly=netstandard" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" NavigationPage.HasNavigationBar="False" x:Class="Ang7.Views.AdminShowFeedbacks">
+
+    <Grid BackgroundColor="LightGray" RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" RowDefinitions="1*,9*">
+        <ffimage:CachedImage Grid.Row="0" Margin="0,10,20,0" Source="back.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="EndAndExpand">
+            <ffimage:CachedImage.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Onback_Clicked" />
+            </ffimage:CachedImage.GestureRecognizers>
+        </ffimage:CachedImage>
+        <Label x:Name="TitleLabel" Grid.Row="0" Text="المقترحات والشكاوي" FontSize="18" FontFamily="{StaticResource Poppins-Medium}" TextColor="Black" Margin="0,10,0,0" HorizontalOptions="Center" VerticalOptions="Center" />
+        <CollectionView x:Name="CV" Grid.Row="1" Margin="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" SelectionMode="None" ItemsSource="{Binding Myfbs}" FlowDirection="RightToLeft">
+            <!--<CollectionView.Header>
+                <Label Text="My Events" TextColor="Black" FontSize="18" FontAttributes="Bold"/>
+            </CollectionView.Header>-->
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame HasShadow="True" BackgroundColor="Transparent" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Padding="0">
+                        <Grid VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+                            <!--<extensions:Expander x:Name="MainExpander" Tapped="MainExpander_Tapped" CollapseAnimationLength="500">
+                                <extensions:Expander.Header>
+                                    <Grid HorizontalOptions="FillAndExpand" BackgroundColor="White" ColumnDefinitions="*,3*">
+                                        <BoxView BackgroundColor="#A0A4C9" Opacity="0.2" />
+                                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                            <Label Text="{Binding Dayname}" TextColor="#6670CC" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" />
+                                            <Label Text="{Binding Day}" TextColor="#FF5151" FontSize="20" HorizontalOptions="Center" FontAttributes="Bold" />
+                                            <Label Text="{Binding Month}" TextColor="#6670CC" FontSize="12" Margin="0,-10,0,0" HorizontalOptions="Center" FontAttributes="Bold" />
+                                            <Label TextColor="#6670CC" FontSize="12" Margin="0,-10,0,0" HorizontalOptions="Center" FontAttributes="Bold" FlowDirection="RightToLeft">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding ampm}" />
+                                                        <Span Text="{Binding Hour}" />
+                                                        <Span Text="{Binding min}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="20">
+                                            <Label Text="{Binding Name , StringFormat='الأسم : {0}' ,Converter={StaticResource ToAr}}" TextColor="Black" FontSize="15" />
+                                            <Label Text="{Binding Email , StringFormat='البريد الإلكتروني : {0}' ,Converter={StaticResource ToAr} }" Opacity="0.85" TextColor="Black" FontSize="12" Margin="0,-5,0,0" />
+                                            <Label Text="{Binding Phone, StringFormat='رقم الهاتف : {0}'}" Opacity="0.75" TextColor="Black" FontSize="12" Margin="0,-5,0,0" />
+                                        </StackLayout>
+                                    </Grid>
+                                </extensions:Expander.Header>
+                                <Grid RowSpacing="0" HorizontalOptions="FillAndExpand" BackgroundColor="#ffffff">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="{Binding infohieght}" />
+                                        <RowDefinition Height="150" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="{Binding Info}" TextColor="Black" FontSize="15" HorizontalTextAlignment="Center" x:Name="DetailsView" IsVisible="False" BackgroundColor="{StaticResource colorWhite}" Padding="10,0,10,0" Grid.Row="0" VerticalOptions="Center" />
+                                    <Grid x:Name="uDetailsView" Grid.Row="1" BackgroundColor="White" Padding="20" IsVisible="False" FlowDirection="RightToLeft" ColumnDefinitions="*,Auto">
+                                        <helpers:EditorWithoutUnderline x:Name="lk1" Grid.Column="0" Placeholder="أكتب رد" FontFamily="{StaticResource Poppins-Regular}" HorizontalOptions="Fill" FontSize="10" BackgroundColor="#FFFAF4" />
+                                        <ffimage:CachedImage Grid.Column="1" Source="profilepage_save.png" Aspect="AspectFit" HorizontalOptions="Center" BackgroundColor="Transparent">
+                                            <ffimage:CachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnCompleted" CommandParameter="{Binding Source={x:Reference lk1},Path=Text}" />
+                                            </ffimage:CachedImage.GestureRecognizers>
+                                        </ffimage:CachedImage>
+                                    </Grid>
+                                </Grid>
+                            </extensions:Expander>-->
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

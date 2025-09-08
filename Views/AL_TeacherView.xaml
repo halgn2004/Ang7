@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:vms="clr-namespace:Ang7.ViewModels" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:helpers="clr-namespace:Ang7.Helpers" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" xmlns:fftransformation="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Compat.Transformations" mc:Ignorable="d" NavigationPage.HasNavigationBar="False" BackgroundColor="#ffffff" x:Class="Ang7.Views.AL_TeacherView">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,20,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Grid.Row="0" RowDefinitions="*,Auto,Auto,Auto" FlowDirection="RightToLeft">
+                <ffimage:CachedImage Grid.Row="0" Grid.RowSpan="4" Source="{Binding Teacher.CP}" Aspect="AspectFill" BackgroundColor="{StaticResource BlackColor}" />
+                <Grid Grid.Row="0" Grid.RowSpan="4" BackgroundColor="{StaticResource DarkColor}" Opacity="0.75" />
+
+                <ffimage:CachedImage Grid.Row="0" Grid.RowSpan="2" Margin="0,25,0,0" Source="{Binding Teacher.PP}" Aspect="AspectFit" Style="{StaticResource ProfileStyle}">
+                    <ffimage:CachedImage.Transformations>
+                        <fftransformation:CircleTransformation BorderSize="0" BorderHexColor="#FF0000" />
+                    </ffimage:CachedImage.Transformations>
+                </ffimage:CachedImage>
+                <StackLayout Grid.Row="2" Margin="0">
+                    <Label Text="{Binding Teacher.Name}" Style="{StaticResource NameStyle}">
+                        <Label.Behaviors>
+                            <toolkit:TouchBehavior LongPressCommand="{Binding CopyLongPress}" LongPressCommandParameter="{Binding Teacher.Name}" LongPressDuration="3" />
+                        </Label.Behaviors>
+                    </Label>
+                </StackLayout>
+                <StackLayout Grid.Row="3" Orientation="Vertical" VerticalOptions="Fill" HorizontalOptions="Center" FlowDirection="RightToLeft" Spacing="0" Opacity="1.25" Margin="5">
+                    <CollectionView ItemsSource="{Binding Subjects}" HeightRequest="{Binding SubjHigh}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="25,Auto" VerticalOptions="Fill" HorizontalOptions="Center" FlowDirection="RightToLeft">
+                                    <ffimage:CachedImage Grid.Column="0" Source="subject_white.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                    <Label Grid.Column="1" Text="{Binding Name}" TextColor="{StaticResource WhiteColor}" VerticalOptions="Start" HorizontalOptions="Center" FontSize="16" FontFamily="Poppins-Medium" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+
+                <ffimage:CachedImage Grid.Row="0" Margin="0,20,30,0" HeightRequest="50" WidthRequest="50" Source="close.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="EndAndExpand" VerticalOptions="Start">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Onback_Clicked" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+                <ffimage:CachedImage Grid.Row="0" Margin="30,20,0,0" IsVisible="{Binding IsUpAvalible}" HeightRequest="50" WidthRequest="50" Source="up.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="StartAndExpand" VerticalOptions="Start">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding UpClicked}" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+            </Grid>
+            <Border StrokeShape="RoundRectangle 20,20,20,20" Stroke="#f6f8f9" Padding="10,0" Margin="15,5,10,0" HeightRequest="{Binding BIOHigh}">
+                <!--<StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                    <Label Text="{Binding Teacher.Bio}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                </StackLayout>-->
+                <Grid ColumnDefinitions="*" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                    <Label Grid.Column="0" Text="{Binding Teacher.Bio}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                </Grid>
+            </Border>
+            <ScrollView VerticalOptions="FillAndExpand">
+                <StackLayout Orientation="Vertical" VerticalOptions="Fill" HorizontalOptions="Center" FlowDirection="RightToLeft" Spacing="0">
+                    <CollectionView ItemsSource="{Binding MyFiles}" Margin="10,0">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border StrokeShape="RoundRectangle 20,20,20,20" Stroke="{Binding BorderColor}" Padding="10,0" Margin="{OnPlatform Android='0,5',iOS='0,10,0,10'}" >
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vms:AL_TeacherViewModel}}, Path=ItemTappedCommand}" CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                        <ffimage:CachedImage Source="{Binding Image}" HeightRequest="48" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                        <Label Text="{Binding Name}" TextColor="#888888" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" Margin="10,0,0,0" />
+                                    </StackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

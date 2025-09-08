@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" NavigationPage.HasNavigationBar="False" BackgroundColor="#FCFCFF" x:Class="Ang7.Views.SS" >
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
+    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid x:Name="Loading" RowDefinitions="Auto,Auto" RowSpacing="5" Margin="20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <Label Grid.Row="0" FontSize="{OnIdiom Phone='Medium',Tablet='Large'}" Text="التحقق من التحديث" HorizontalTextAlignment="Center" Margin="20,0" VerticalOptions="CenterAndExpand" />
+            <ActivityIndicator Grid.Row="1" x:Name="activityindicator" IsRunning="True" IsVisible="True" VerticalOptions="CenterAndExpand" Color="{StaticResource BorderMainColor}"/>
+        </Grid>
+        <skia:SKCanvasView x:Name="canvasView" PaintSurface="OnCanvasViewPaintSurface" WidthRequest="{OnIdiom Phone=300,Tablet=600}" HeightRequest="{OnIdiom Phone=300,Tablet=600}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="False"/>
+
+        <Grid x:Name="NeedUpdate" RowDefinitions="Auto,Auto,Auto" RowSpacing="5" Margin="20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="False">
+            <ffimage:CachedImage Grid.Row="0" Source="newupdate.png" DownsampleToViewSize="True" Aspect="AspectFit" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+            <Label Grid.Row="1" FontSize="{OnIdiom Phone='Medium',Tablet='Large'}" Text="هذه النسخه قديمة جدا برجاء تحديث البرنامج وأعادة المحاولة" HorizontalTextAlignment="Center" Margin="20,0,20,50"/>
+            <Button Grid.Row="2" Text="التحديث الأن" Clicked="OnUpdateNow" Style="{StaticResource DarkBut}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="20,30,20,0"/>
+        </Grid>
+        
+    </StackLayout>
+</ContentPage>

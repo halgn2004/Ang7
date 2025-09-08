@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pages="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui" xmlns:animations="clr-namespace:Ang7.Helpers" xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView" xmlns:Converters="clr-namespace:Ang7.Helpers" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" mc:Ignorable="d" x:Class="Ang7.Views.PopUp.SelectAvatar">
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ActiveIndicator" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#1f557b" />
+            </Style>
+            <Style x:Key="InactiveIndicator" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="Opacity" Value="0.2" />
+                <Setter Property="BorderColor" Value="#52A5DB" />
+            </Style>
+            <Converters:InvertBoolConverter x:Key="inverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
+    <pages:PopupPage.Animation>
+        <animations:UserAnimation />
+    </pages:PopupPage.Animation>
+    <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" Padding="24" Spacing="24" Margin="12" FlowDirection="RightToLeft" BackgroundColor="White">
+        <Grid RowDefinitions="400,64" ColumnDefinitions="*,*" FlowDirection="RightToLeft">
+            <Grid Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" RowDefinitions="*,Auto">
+                <cards:CarouselView x:Name="CarouselView" IndicatorView="indicatorView" ItemsSource="{Binding Items}" SelectedIndex="{Binding CurrentIndex}">
+                    <x:Arguments>
+                        <proc:CarouselProcessor OpacityFactor="0" RotationFactor="0.1" ScaleFactor="0.5" />
+                    </x:Arguments>
+                    <cards:CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentView>
+                                <Grid Padding="3,3,3,40" x:Name="Item" RowDefinitions="*,*" ColumnDefinitions="*,*" ColumnSpacing="10" RowSpacing="5">
+                                    <ffimage:CachedImage Grid.Row="0" Grid.Column="0" Source="{Binding Img1}" Aspect="AspectFit" IsVisible="{Binding Source={x:Reference CarouselView}, Path=BindingContext.Is1Selected, Converter={StaticResource inverter}}">
+                                        <ffimage:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference CarouselView}, Path=BindingContext.OnImageClicked}" CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext.Img1}" />
+                                        </ffimage:CachedImage.GestureRecognizers>
+                                    </ffimage:CachedImage>
+                                    <ffimage:CachedImage Grid.Row="0" Grid.Column="1" Source="{Binding Img2}" Aspect="AspectFit" IsVisible="{Binding Source={x:Reference CarouselView}, Path=BindingContext.Is2Selected, Converter={StaticResource inverter}}">
+                                        <ffimage:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference CarouselView}, Path=BindingContext.OnImageClicked}" CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext.Img2}" />
+                                        </ffimage:CachedImage.GestureRecognizers>
+                                    </ffimage:CachedImage>
+                                    <ffimage:CachedImage Grid.Row="1" Grid.Column="0" Source="{Binding Img3}" Aspect="AspectFit" IsVisible="{Binding Source={x:Reference CarouselView}, Path=BindingContext.Is3Selected, Converter={StaticResource inverter}}">
+                                        <ffimage:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference CarouselView}, Path=BindingContext.OnImageClicked}" CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext.Img3}" />
+                                        </ffimage:CachedImage.GestureRecognizers>
+                                    </ffimage:CachedImage>
+                                    <ffimage:CachedImage Grid.Row="1" Grid.Column="1" Source="{Binding Img4}" Aspect="AspectFit" IsVisible="{Binding Source={x:Reference CarouselView}, Path=BindingContext.Is4Selected, Converter={StaticResource inverter}}">
+                                        <ffimage:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference CarouselView}, Path=BindingContext.OnImageClicked}" CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext.Img4}" />
+                                        </ffimage:CachedImage.GestureRecognizers>
+                                    </ffimage:CachedImage>
+
+                                    <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource SelectAvatarBorderActive}" IsVisible="{Binding Source={x:Reference CarouselView}, Path=BindingContext.Is1Selected}">
+                                        <ffimage:CachedImage Source="{Binding Img1}" Aspect="AspectFit" Margin="5"/>
+                                    </Border>
+                                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource SelectAvatarBorderActive}" IsVisible="{Binding Source={x:Reference CarouselView}, Path=BindingContext.Is2Selected}">
+                                        <ffimage:CachedImage Source="{Binding Img2}" Aspect="AspectFit" Margin="5"/>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource SelectAvatarBorderActive}" IsVisible="{Binding Source={x:Reference CarouselView}, Path=BindingContext.Is3Selected}">
+                                        <ffimage:CachedImage Source="{Binding Img3}" Aspect="AspectFit" Margin="5" />
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource SelectAvatarBorderActive}" IsVisible="{Binding Source={x:Reference CarouselView}, Path=BindingContext.Is4Selected}">
+                                        <ffimage:CachedImage Source="{Binding Img4}" Aspect="AspectFit" Margin="5" />
+                                    </Border>
+                                </Grid>
+                            </ContentView>
+                        </DataTemplate>
+                    </cards:CarouselView.ItemTemplate>
+                    <!--<controls:RightArrowControl ToFadeDuration="2500" />
+                <controls:LeftArrowControl ToFadeDuration="2500" />-->
+                </cards:CarouselView>
+                <IndicatorView x:Name="indicatorView" Grid.Row="1" Margin="10" HorizontalOptions="Center" IndicatorColor="LightSkyBlue" SelectedIndicatorColor="DarkBlue" />
+            </Grid>
+            <ffimage:CachedImage Grid.Row="1" Grid.Column="0" Source="profilepage_save.png" Aspect="AspectFit" HorizontalOptions="Center" BackgroundColor="Transparent">
+                <ffimage:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSave" />
+                </ffimage:CachedImage.GestureRecognizers>
+            </ffimage:CachedImage>
+            <ffimage:CachedImage Grid.Row="1" Grid.Column="1" Source="profilepage_dontsave.png" Aspect="AspectFit" HorizontalOptions="Center" BackgroundColor="Transparent">
+                <ffimage:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCancel" />
+                </ffimage:CachedImage.GestureRecognizers>
+            </ffimage:CachedImage>
+        </Grid>
+    </StackLayout>
+</pages:PopupPage>

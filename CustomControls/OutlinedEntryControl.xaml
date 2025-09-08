@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Ang7.CustomControls.OutlinedEntryControl" RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" xmlns:handlers="clr-namespace:Ang7.Handlers" x:Name="this" 
+      MinimumHeightRequest="{OnPlatform iOS='60'}">
+    <Border Grid.Row="0" Grid.ColumnSpan="2" Padding="8,2,8,2" Stroke="Gray" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="Transparent" MinimumHeightRequest="{OnPlatform iOS='60'}">
+        <handlers:BorderlessEntry x:Name="txtEntry" Focused="txtEntry_Focused" Unfocused="txtEntry_Unfocused" Text="{Binding Source={x:Reference this}, Path=Text}" Keyboard="{Binding Keyboard, Source={x:Reference this}}" IsPassword="{Binding IsPassword, Source={x:Reference this}}" MaxLength="{Binding MaxLength, Source={x:Reference this}}" FontSize="{OnIdiom Phone=15,Tablet=30}"/>
+        <Border.Triggers>
+            <DataTrigger TargetType="Border" Binding="{Binding IsFocused, Source={x:Reference txtEntry}}" Value="true">
+                <Setter Property="Stroke" Value="#0F97ED" />
+                <Setter Property="StrokeThickness" Value="2" />
+            </DataTrigger>
+        </Border.Triggers>
+    </Border>
+
+    <Label Grid.Row="0" FontSize="{OnIdiom Phone=15,Tablet=30}" x:Name="lblPlaceholder" Margin="10,0,10,0" TextColor="Gray" Text="{Binding Source={x:Reference this}, Path=Placeholder}" BackgroundColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+        <Label.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+        </Label.GestureRecognizers>
+    </Label>
+
+    <!-- Password Toggle Icon  -->
+    <ffimage:CachedImage Source="hidepw.png" HorizontalOptions="End" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Aspect="AspectFit" HeightRequest="32" WidthRequest="32" Margin="10,0" IsVisible="{Binding IsShowPasswordButton, Source={x:Reference this}}">
+        <ffimage:CachedImage.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_ShowPassword" />
+        </ffimage:CachedImage.GestureRecognizers>
+        <ffimage:CachedImage.Triggers>
+            <DataTrigger TargetType="ffimage:CachedImage" Binding="{Binding IsPassword, Source={x:Reference this}}" Value="true">
+                <Setter Property="Source" Value="showpw.png" />
+            </DataTrigger>
+            <DataTrigger TargetType="ffimage:CachedImage" Binding="{Binding IsPassword, Source={x:Reference this}}" Value="false">
+                <Setter Property="Source" Value="hidepw.png" />
+            </DataTrigger>
+        </ffimage:CachedImage.Triggers>
+    </ffimage:CachedImage>
+
+    <Label x:Name="ValidateMsgLabel" Grid.Row="1" Text="{Binding Source={x:Reference this}, Path=ValidationMessage}" TextColor="Red" FontSize="{OnIdiom Phone=10,Tablet=25}" FontFamily="Poppins-Regular" Margin="10,0,10,0" IsVisible="{Binding Source={x:Reference this}, Path=IsValidationVisible}" />
+
+</Grid>

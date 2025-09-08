@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pages="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui" CloseWhenBackgroundIsClicked="False" mc:Ignorable="d" x:Class="Ang7.Views.PopUp.ConfirmMsg">
+    <Border StrokeShape="RoundRectangle 25,25,25,25" FlowDirection="RightToLeft" VerticalOptions="Center" HorizontalOptions="Center" Padding="44,44,44,44" Margin="24" BackgroundColor="White" >
+        <StackLayout HorizontalOptions="FillAndExpand" Spacing="5" Orientation="Vertical">
+            <Label x:Name="HeadLabel" Text="Confirm" TextColor="Black" FontFamily="Poppins-Regular" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" Padding="0,0,0,10" />
+            <Label x:Name="MsgLabel" Text="LegendKnight" HorizontalTextAlignment="Start" FontSize="18" TextColor="#2f5252" FontFamily="Poppins-Regular" Padding="0,0,0,25" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                <Button x:Name="NoBut" Text="No" BorderColor="#DB0D0D" BackgroundColor="#DB0D0D" HorizontalOptions="Center" Clicked="OnNoButClick" Grid.Column="0" Style="{StaticResource DarkBut}" WidthRequest="120" HeightRequest="60" FontFamily="Poppins-SemiBold" />
+                <Button x:Name="YesBut" Text="Yes" BorderColor="#248d35" BackgroundColor="#248d35" HorizontalOptions="Center" Clicked="OnYesButClick" Grid.Column="1" Style="{StaticResource DarkBut}" WidthRequest="120" HeightRequest="60" FontFamily="Poppins-SemiBold" />
+            </Grid>
+        </StackLayout>
+    </Border>
+</pages:PopupPage>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color><!--512BD4-->
+    <color name="colorPrimaryDark">#ffffff</color><!--2B0B98-->
+    <color name="colorAccent">#0AB0B0</color>
+	<!--<style name="SplashTheme" parent="@style/Maui.SplashTheme">
+		<item name="android:statusBarColor">@android:color/white</item>
+		<item name="android:windowLightStatusBar">true</item>
+	</style>-->
+	<style name="Maui.SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="android:statusBarColor">@android:color/white</item>
+	</style>
+</resources>

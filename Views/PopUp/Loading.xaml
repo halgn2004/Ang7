@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+             xmlns:pages="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui" 
+             CloseWhenBackgroundIsClicked="False"                 
+             mc:Ignorable="d"
+             x:Class="Ang7.Views.PopUp.Loading">
+    <Border Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 25,25,25,25" VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Padding="{Binding FramePadding}"
+            Margin="24"
+            BackgroundColor="White">
+        <StackLayout HorizontalOptions="Center" Spacing="30" FlowDirection="RightToLeft">
+            <ActivityIndicator IsVisible="{Binding AIVisible}" IsRunning="{Binding AIVisible}" Color="Gray" />
+
+            <Label Text="{Binding Labeltxt}" HorizontalOptions="Center" IsVisible="{Binding LabelVisible}" HorizontalTextAlignment="Center"
+                   FontSize="22" TextColor="#2f5252" FontFamily="Poppins-Regular" />
+
+            <Button Text="{Binding buttxt}" HorizontalOptions="Center" IsVisible="{Binding ButVisible}" Command="{ Binding ButClickCommand }" Style="{StaticResource DarkBut}" WidthRequest="200" HeightRequest="60" FontFamily="Poppins-Regular"/>
+
+        </StackLayout>
+    </Border>
+</pages:PopupPage>

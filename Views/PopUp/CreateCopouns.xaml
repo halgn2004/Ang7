@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+                 xmlns:ct="clr-namespace:Ang7.CustomControls" 
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                 CloseWhenBackgroundIsClicked="True" 
+                 xmlns:customControls="clr-namespace:Ang7.CustomControls" 
+                 xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design" 
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                 xmlns:pages="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui" 
+                 xmlns:animations="clr-namespace:Ang7.Helpers" 
+                 xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" 
+                 mc:Ignorable="d" 
+                 x:Class="Ang7.Views.PopUp.CreateCopouns">
+    <pages:PopupPage.Animation>
+        <animations:UserAnimation />
+    </pages:PopupPage.Animation>
+
+
+    <Border StrokeShape="RoundRectangle 25,25,25,25" VerticalOptions="Center" HorizontalOptions="Center" Padding="24,10,24,24" Margin="12" BackgroundColor="White" FlowDirection="RightToLeft">
+        <StackLayout Spacing="10" Orientation="Vertical">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Label Text="أنشاء كوبونات جديده" TextColor="Black" FontSize="20" FontFamily="Poppins-SemiBold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="Center" />
+                <ffimage:CachedImage Source="popupselect_close.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="EndAndExpand" WidthRequest="45" HeightRequest="45" Margin="0,-5,0,0">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnClose_Clicked" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+            </StackLayout>
+            <Grid RowDefinitions="Auto,Auto" RowSpacing="25" FlowDirection="RightToLeft">
+                <VerticalStackLayout Padding="10" Grid.Row="0" Spacing="15">
+                    <!--3dd l users , 3dd el coupouns , sal7en l amta-->
+                    <ct:OutlinedEntryControl Placeholder="عدد الكوبونات" Text="{Binding CopounsCount, Converter={StaticResource IntToStringConverter}}" MaxLength="2" Keyboard="Numeric" />
+                    <ct:OutlinedEntryControl Placeholder="عدد الاستخدامات" Text="{Binding NoOfUsers, Converter={StaticResource IntToStringConverter}}" MaxLength="3" Keyboard="Numeric" />
+                    <Grid RowDefinitions="Auto">
+                        <Border Grid.Row="0" Padding="8,2,8,2" Stroke="Gray" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="Transparent">
+                            <DatePicker MinimumDate="{Binding MinDate}" MaximumDate="{Binding MaxDate}" Date="{Binding SelectedDate}"  HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Row="0" FontSize="11" x:Name="lblPlaceholder" Margin="10,0,10,0" TextColor="Gray" Text="صالح حتي" BackgroundColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TranslationX="0" TranslationY="-23"/>
+                    </Grid>
+                </VerticalStackLayout>
+                
+                <ct:PasswordPatternPicker SelectedPattern="{Binding PwPattern}" CodeLength="{Binding CodeLength}" Grid.Row="1" Margin="30,0"/>
+                
+            </Grid>
+            <StackLayout HorizontalOptions="Center" Spacing="5">
+                <Button Text="أنشاء" Command="{ Binding ExecuteCommand }" Style="{StaticResource LKBut02}" WidthRequest="175" HeightRequest="60"/>
+            </StackLayout>
+        </StackLayout>
+    </Border>
+
+</pages:PopupPage>

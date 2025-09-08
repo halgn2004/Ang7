@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="Ang7.AppShell" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:Ang7" xmlns:views="clr-namespace:Ang7.Views" Shell.FlyoutBehavior="Disabled" Shell.NavBarIsVisible="False" Title="Ang7">
+
+    <ShellContent Route="SS" ContentTemplate="{DataTemplate views:SS}" />
+    <ShellContent Route="Intro_1" ContentTemplate="{DataTemplate views:Intro_1}" />
+    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
+    <ShellContent Route="SigninPage" ContentTemplate="{DataTemplate views:SigninPage}" />
+    <ShellContent Route="SignupPage" ContentTemplate="{DataTemplate views:SignupPage}" />
+    <ShellContent Route="AL_HomePage" ContentTemplate="{DataTemplate views:AL_HomePage}" />
+
+</Shell>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design" xmlns:customControls="clr-namespace:Ang7.CustomControls"  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:Ang7.Views" xmlns:vms="clr-namespace:Ang7.ViewModels" mc:Ignorable="d" xmlns:helpers="clr-namespace:Ang7.Helpers" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" xmlns:fftransformation="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Compat.Transformations" x:Class="Ang7.Views.SignupPage" NavigationPage.HasNavigationBar="False" BackgroundColor="White">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,20,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+
+    <Grid BackgroundColor="White" RowSpacing="0" ColumnSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="9*" />
+        </Grid.RowDefinitions>
+
+        <ffimage:CachedImage Grid.Row="0" Margin="{OnPlatform Android='0,15,-20,15',iOS='20,15,20,15'}" Source="back.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="EndAndExpand">
+            <ffimage:CachedImage.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Onback_Clicked" />
+            </ffimage:CachedImage.GestureRecognizers>
+        </ffimage:CachedImage>
+        <Label Grid.Row="0" Text="إنشاء حساب جديد" FontSize="Header" FontFamily="Poppins-Medium" TextColor="Black" Margin="0,10,0,0" HorizontalOptions="Center" VerticalOptions="Center" />
+
+        <Grid Grid.Row="1" RowSpacing="0" ColumnSpacing="0" RowDefinitions="auto,auto,10*,2*">
+
+            <Grid Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Start">
+                <ffimage:CachedImage Grid.Row="0" Source="{Binding ImageSourse}" HeightRequest="150" WidthRequest="150" VerticalOptions="Fill" HorizontalOptions="Fill">
+                    <ffimage:CachedImage.Transformations>
+                        <fftransformation:CircleTransformation BorderSize="0" BorderHexColor="#FF0000" />
+                    </ffimage:CachedImage.Transformations>
+                </ffimage:CachedImage>
+                <ffimage:CachedImage Grid.Row="0" Source="blackoverlay.png" VerticalOptions="Fill" HorizontalOptions="Fill" HeightRequest="150" WidthRequest="150">
+                    <ffimage:CachedImage.Transformations>
+                        <fftransformation:CircleTransformation BorderSize="0" BorderHexColor="#FF0000" />
+                    </ffimage:CachedImage.Transformations>
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Attach}" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+                <ffimage:CachedImage Grid.Row="0" Source="signuppage_uploadpic.png" VerticalOptions="End" HorizontalOptions="Center" Margin="0,17" HeightRequest="24" WidthRequest="24">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Attach}" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+            </Grid>
+
+            <Label Grid.Row="1" Text="أضف صورة" FontSize="Small" FontFamily="Poppins-Medium" TextColor="#888888" HorizontalOptions="Center" VerticalOptions="Start"/>
+
+            <ScrollView Grid.Row="2" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand">
+                <StackLayout VerticalOptions="Fill" HorizontalOptions="Center" Spacing="15" FlowDirection="RightToLeft">
+                    <StackLayout HorizontalOptions="Center" Spacing="5" FlowDirection="RightToLeft">
+                        <customControls:OutlinedEntryControl Text="{ Binding Email }" Keyboard="Email" Placeholder="البريد الإلكتروني" WidthRequest="350" ValidationMessage=" * بريد إلكتروني غير صحيح." ValidationType="Email" Padding="0,10,0,0"/>
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="Center" Spacing="5" FlowDirection="RightToLeft">
+                        <customControls:OutlinedEntryControl Text="{ Binding Password }" IsPassword="True" IsShowPasswordButton="True" Grid.ColumnSpan="2" Placeholder="كلمة المرور" WidthRequest="350" Margin="0,0,0,0" ValidationMessage=" * كلمة المرور غير صحيحة." ValidationType="Password" />
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="Center" Spacing="5" FlowDirection="RightToLeft">
+                        <customControls:OutlinedEntryControl Text="{ Binding Password2 }" IsPassword="True" IsShowPasswordButton="True" Grid.ColumnSpan="2" Placeholder="تأكيد كلمة المرور" WidthRequest="350" Margin="0,0,0,0" ValidationMessage="* غير متطابقة مع كلمة المرور." IsValidationVisible="{Binding PWCValidationMsg}" ValidationType="PasswordConfirmation" MainPassword="{ Binding Password }"/>
+                        <!--<Label Text="* غير متطابقة مع كلمة المرور." TextColor="Red" IsVisible="{Binding PWCValidationMsg}" FontSize="10" FontFamily="Poppins-Regular" />
+                    --></StackLayout>
+
+                    <StackLayout HorizontalOptions="Center" Spacing="5" FlowDirection="RightToLeft">
+                        <customControls:OutlinedEntryControl Text="{ Binding Name }" Keyboard="Text" Placeholder="الأسم" WidthRequest="350" ValidationMessage=" * أسم غير صحيح"  ValidationType="Name" />
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="Center" Spacing="5" FlowDirection="RightToLeft">
+                        <customControls:OutlinedEntryControl Text="{ Binding Phone }" Keyboard="Telephone" Placeholder="رقم الهاتف المحمول" WidthRequest="350" ValidationMessage=" * رقم هاتف غير صحيح" ValidationType="Phone" />
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="Center" Spacing="5" FlowDirection="RightToLeft" IsVisible="{Binding IsTeacher}">
+                        <Editor Text="{ Binding BIO }" Placeholder="السيرة الذاتية" WidthRequest="350" />
+                        <!--Style="{StaticResource Editor}"-->
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="Center" Spacing="5" FlowDirection="RightToLeft" IsVisible="{Binding IsTeacher}">
+                        <StackLayout HorizontalOptions="Center" Spacing="10" FlowDirection="RightToLeft" Orientation="Horizontal">
+                            <Label Text="المواد الدراسية" FontSize="16" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <ffimage:CachedImage Source="sus_add.png" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Aspect="AspectFit" HeightRequest="32" WidthRequest="32">
+                                <ffimage:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding AddSubjectCommand}" />
+                                </ffimage:CachedImage.GestureRecognizers>
+                            </ffimage:CachedImage>
+                        </StackLayout>
+                        <CollectionView ItemsSource="{Binding Subjects}" HeightRequest="{Binding subjecthieghts}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout HorizontalOptions="Center" Spacing="5" FlowDirection="RightToLeft">
+                                        <Grid HorizontalOptions="Center" WidthRequest="350" FlowDirection="RightToLeft">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Entry Text="{ Binding Name }" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="أسم الماده" Style="{StaticResource Entry}" FlowDirection="RightToLeft" />
+                                            <ffimage:CachedImage Source="sus_del.png" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="1" Aspect="AspectFit" HeightRequest="32" WidthRequest="32">
+                                                <ffimage:CachedImage.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vms:SignupPageViewModel}}, Path=RemoveSubjectCommand}" CommandParameter="{Binding .}" />
+                                                </ffimage:CachedImage.GestureRecognizers>
+                                            </ffimage:CachedImage>
+                                        </Grid>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                    
+                    <StackLayout HorizontalOptions="Center" Spacing="5" Padding="0,0,0,10">
+                        <Button Text="إنشاء" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{ Binding LoginCommand }" Style="{StaticResource LKBut01}" WidthRequest="300" HeightRequest="60" />
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Orientation="Horizontal" Grid.Row="3" FlowDirection="RightToLeft">
+                <Label Text="تمتلك حساب بالفعل؟" TextColor="#2D2D2D" Opacity=".5" FontFamily="Poppins-Medium" FontSize="14" />
+                <Label Text="سجل دخول الأن." TextColor="#1F557B" FontFamily="Poppins-SemiBold" FontSize="14">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{ Binding ToLoginCommand }" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

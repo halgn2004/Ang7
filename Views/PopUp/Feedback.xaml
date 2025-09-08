@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pages="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui" xmlns:handlers="clr-namespace:Ang7.Handlers" 
+             xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" 
+             mc:Ignorable="d"
+             x:Class="Ang7.Views.PopUp.Feedback">
+    <!--CloseWhenBackgroundIsClicked="False"-->
+
+    <Grid BackgroundColor="White" RowDefinitions="62,*">
+        <Grid Grid.Row="0" MinimumHeightRequest="62" HeightRequest="62" FlowDirection="RightToLeft">
+            <ffimage:CachedImage Grid.Row="0" Margin="5,10" Source="back.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="StartAndExpand">
+                <ffimage:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked" />
+                </ffimage:CachedImage.GestureRecognizers>
+            </ffimage:CachedImage>
+            <Label Grid.Row="0" Text="المقترحات والشكاوي" FontSize="18" FontFamily="Poppins-Medium" TextColor="Black" Margin="0,10" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+        </Grid>
+
+        <Grid Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0,2,0,0" Padding="10,0,5,5" FlowDirection="RightToLeft" RowDefinitions="auto,*,auto">
+            <Picker x:Name="picker" Title="أختر العنوان المناسب"  TitleColor="#ededed"  Grid.Row="0" SelectedIndex="{Binding PickerSelectedIndex}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>مقترح</x:String>
+                        <x:String>أستفسار</x:String>
+                        <x:String>شكوي</x:String>
+                        <x:String>مشكلة</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <handlers:EditorWithoutUnderline Grid.Row="1" Text="{Binding Note}" Placeholder="أكتب المحتوي" FontFamily="Poppins-Regular" HorizontalOptions="Fill" AutoSize="TextChanges" BackgroundColor="#FFFAF4" HorizontalTextAlignment="Start"/>
+            <StackLayout  Grid.Row="2" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center" >
+                <ffimage:CachedImage HeightRequest="60" Margin="0,10,20,0" Source="{Binding ButSEImage}" BackgroundColor="Transparent" IsEnabled="{Binding IsEn}" HorizontalOptions="FillAndExpand">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{ Binding SendEmailCommand }" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+
+                <StackLayout Orientation="Horizontal" IsVisible="{Binding IsShowmsg}" HorizontalOptions="Center">
+                    <Label Text="{ Binding Msg }" HorizontalOptions="Center" TextColor="Red" />
+                    <ActivityIndicator VerticalOptions="Center" HorizontalOptions="Center" Color="Black" IsRunning="{ Binding Activated }" IsVisible="{ Binding Activated }" />
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+
+
+    </Grid>
+</pages:PopupPage>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" NavigationPage.HasNavigationBar="False" BackgroundColor="White" x:Class="Ang7.Views.Intro_1">
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
+    <Grid BackgroundColor="White" RowSpacing="50" ColumnSpacing="0" RowDefinitions="*,Auto,Auto,Auto" Padding="5,0">
+        <ffimage:CachedImage Grid.Row ="0" x:Name="LKIMG" Source="intro1.png" DownsampleToViewSize="True" Aspect="AspectFill" Margin="{OnIdiom Phone='10,0',Tablet='50,0'}" />
+        <Label Grid.Row ="1" FontSize="Title" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="أهلا بيك مع انجح" TextColor="#3427CF" FontAttributes="Bold" VerticalOptions="Center"/>
+        <Label Grid.Row ="2" FontSize="Subtitle" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="مستعد تعيش تجربة مفيده وممتعه معانا؟" TextColor="#5E5A71" VerticalOptions="Center" Margin="{OnIdiom Phone='0,-5',Tablet='0,-45,0,0'}"/>
+        <Button Grid.Row ="3" Text="مستعد" Clicked="Button_Clicked" Style="{StaticResource DarkBut}" BackgroundColor="#3427CF" VerticalOptions="End" Margin="{OnIdiom Phone='20,50',Tablet='20,50'}" HeightRequest="{OnPlatform Android=60, iOS=75}" />
+    </Grid>
+</ContentPage>

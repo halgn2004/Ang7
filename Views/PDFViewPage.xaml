@@ -1,0 +1,102 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pdf="clr-namespace:Maui.PDFView;assembly=Maui.PDFView"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui"             
+             x:Class="Ang7.Views.PDFViewPage">
+
+
+
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" RowDefinitions="62,Auto,*">
+        <!-- Header Section -->
+        <Grid Grid.Row="0" MinimumHeightRequest="62" HeightRequest="62">
+            <ffimage:CachedImage Grid.Row="0" 
+                           Margin="{OnPlatform Android='-20,10',iOS='10'}" 
+                           Source="popupselect_close.png" 
+                           BackgroundColor="Transparent" 
+                           FlexLayout.AlignSelf="Center" 
+                           FlexLayout.Grow="1" 
+                           Aspect="AspectFit" 
+                           HorizontalOptions="StartAndExpand">
+                <ffimage:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked" />
+                </ffimage:CachedImage.GestureRecognizers>
+            </ffimage:CachedImage>
+            <Label x:Name="Title" 
+               Grid.Row="0" 
+               Text="LegendKnight" 
+               FontSize="18" 
+               FontFamily="Poppins-Medium" 
+               TextColor="Black" 
+               Margin="0,10" 
+               HorizontalOptions="Center" 
+               VerticalOptions="CenterAndExpand" />
+        </Grid>
+
+        <!-- Controls Section -->
+        <ScrollView Grid.Row="1" Orientation="Horizontal">
+            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
+              ColumnSpacing="8"
+              RowDefinitions="Auto,Auto">
+                <Label Grid.Row="0"
+                   Grid.Column="0"
+                   FontSize="Caption"
+                   HorizontalTextAlignment="Center"
+                   Text="Horizontal"
+                   VerticalOptions="Center" />
+                <CheckBox Grid.Row="1"
+                      Grid.Column="0"
+                      IsChecked="{Binding IsHorizontal}"
+                      VerticalOptions="Center" />
+                <Label Grid.Row="0"
+                   Grid.Column="1"
+                   FontSize="Caption"
+                   HorizontalTextAlignment="Center"
+                   Text="{Binding MaxZoom, StringFormat='Max zoom is {0}'}" />
+                <Stepper Grid.Row="1"
+                     Grid.Column="1"
+                     Maximum="5"
+                     Minimum="1"
+                     Value="{Binding MaxZoom}" />
+                <Label Grid.Row="0"
+                   Grid.Column="2"
+                   FontSize="Caption"
+                   HorizontalTextAlignment="Center"
+                   Text="{Binding PagePosition, StringFormat='Page {0}'}" />
+                <Stepper Grid.Row="1"
+                     Grid.Column="2"
+                     Maximum="{Binding MaxPageIndex}"
+                     Minimum="0"
+                     Value="{Binding PageIndex, Mode=TwoWay}" />
+                <Button Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="3"
+                    Command="{Binding ChangeUriCommand}"
+                    Text="Change Uri"
+                    VerticalOptions="Center" />
+                <Button Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="4"
+                    Command="{Binding UploadUriCommand}"
+                    Text="Upload Uri"
+                    VerticalOptions="Center" />
+            </Grid>
+        </ScrollView>
+
+        <!-- PDF View Section -->
+        <pdf:PdfView Grid.Row="2"
+                 IsHorizontal="{Binding IsHorizontal}"
+                 MaxZoom="{Binding MaxZoom}"
+                 PageChangedCommand="{Binding PageChangedCommand}"
+                 Uri="{Binding PdfSource}"
+                 PageIndex="{Binding PageIndex, Mode=TwoWay}" />
+
+        <!-- Page Position Label -->
+        <Label Grid.Row="2"
+           BackgroundColor="WhiteSmoke"
+           HorizontalOptions="Start"
+           Text="{Binding PagePosition}"
+           TextColor="Green"
+           VerticalOptions="Start" />
+    </Grid>
+</ContentPage>

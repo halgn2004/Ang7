@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:handlers="clr-namespace:Ang7.Handlers"  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pages="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui" xmlns:helpers="clr-namespace:Ang7.Helpers" CloseWhenBackgroundIsClicked="False" mc:Ignorable="d" x:Class="Ang7.Views.PopUp.GetEditorText">
+    <Border StrokeShape="RoundRectangle 25,25,25,25" FlowDirection="RightToLeft" VerticalOptions="Center" HorizontalOptions="Center" Padding="24" Margin="24" BackgroundColor="White">
+        <StackLayout HorizontalOptions="Center" Spacing="5" Orientation="Vertical" FlowDirection="RightToLeft">
+            <Label x:Name="HeadLabel" Text="Confirm" TextColor="Black" FontSize="16" FontAttributes="Bold" FontFamily="Poppins-Regular" HorizontalTextAlignment="Start" />
+            <handlers:EditorWithoutUnderline x:Name="editor" FontSize="16" Margin="0,10,0,10" PlaceholderColor="#DDDDDD" AutoSize="TextChanges" HeightRequest="200" MinimumWidthRequest="150" HorizontalOptions="FillAndExpand" MinimumHeightRequest="150" FontFamily="Poppins-Regular" FlowDirection="RightToLeft" HorizontalTextAlignment="Start" />
+            <BoxView HeightRequest="1" BackgroundColor="#DEDEDE" Color="#DEDEDE" Margin="0,-5,0,0" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                <Button x:Name="NoBut" Text="No" BorderColor="#DB0D0D" BackgroundColor="#DB0D0D" HorizontalOptions="Center" Clicked="OnNoButClick" Grid.Column="0" Style="{StaticResource DarkBut}" WidthRequest="120" HeightRequest="60" FontFamily="Poppins-SemiBold" />
+                <Button x:Name="YesBut" Text="Yes" BorderColor="#248d35" BackgroundColor="#248d35" HorizontalOptions="Center" Clicked="OnYesButClick" Grid.Column="1" Style="{StaticResource DarkBut}" WidthRequest="120" HeightRequest="60" FontFamily="Poppins-SemiBold" />
+            </Grid>
+        </StackLayout>
+    </Border>
+</pages:PopupPage>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" 
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Ang7.Views.SettingsPage" BackgroundColor="White">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,0,0,-20" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <Grid BackgroundColor="White" RowSpacing="0" ColumnSpacing="0" RowDefinitions="10*,5*,85*">
+
+        <Image x:Name="SettingButton" Grid.Row="0" Source="back.png" Style="{StaticResource SP_HeaderImageBut}">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Onback_Clicked" />
+            </Image.GestureRecognizers>
+        </Image>
+        <Label x:Name="TitleLabel" Grid.Row="0" Text="الإعدادات" Style="{StaticResource SP_HeaderLabel}" />
+
+        <Grid x:Name="SettingsTable" Grid.Row="2" HorizontalOptions="Fill" VerticalOptions="Fill" ColumnDefinitions="4*,92*,4*">
+            <Grid Grid.Column="1" RowSpacing="10" Padding="0" RowDefinitions="Auto,Auto,Auto,Auto">
+                <!-- Version Item -->
+                <Border x:Name="VersionFrame" Grid.Row="0"  Style="{StaticResource SP_SBorder}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnVersionTapped" />
+                    </Border.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0" InputTransparent="True">
+                        <Label Text="النسخة" Style="{StaticResource SP_ItemName}" />
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" Spacing="1" InputTransparent="True">
+                            <ActivityIndicator x:Name="VersionAI" Color="Gray" IsVisible="false" VerticalOptions="Center" HeightRequest="{OnIdiom Phone=20,Tablet=30}" InputTransparent="True" />
+                            <Label x:Name="VersionLabel" Text="1.0.0" TextColor="#181e2d" VerticalOptions="Center" FontFamily="Poppins-Medium" FontSize="{OnIdiom Phone=16,Tablet=24}" FlowDirection="LeftToRight" InputTransparent="True" />
+                        </StackLayout>
+                    </StackLayout>
+                </Border>
+
+                <!-- Rate Item -->
+                <Border x:Name="RateFrame" Grid.Row="1"  Style="{StaticResource SP_SBorder}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRateTapped" />
+                    </Border.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                        <Label Text="قيم التطبيق" Style="{StaticResource SP_ItemName}"/>
+                        <Image Style="{StaticResource SP_LeftArrow}" />
+                    </StackLayout>
+                </Border>
+
+
+                <!-- Privacy Policy Item -->
+                <Border x:Name="PPFrame" Grid.Row="2"  Style="{StaticResource SP_SBorder}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPPTapped" />
+                    </Border.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                        <Label Text="سياسة الخصوصية" Style="{StaticResource SP_ItemName}" />
+                        <Image Style="{StaticResource SP_LeftArrow}" />
+                    </StackLayout>
+                </Border>
+
+                <!-- Terms of Service Item -->
+                <Border x:Name="TSFrame" Grid.Row="3"  Style="{StaticResource SP_SBorder}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTSTapped" />
+                    </Border.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                        <Label Text="شروط الخدمة" Style="{StaticResource SP_ItemName}" />
+                        <Image Style="{StaticResource SP_LeftArrow}" />
+                    </StackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--<Grid Grid.Row="2" HorizontalOptions="Fill" VerticalOptions="Fill" ColumnDefinitions="4*,92*,4*">
+            <TableView x:Name="SettingsTable" Intent="Settings" HasUnevenRows="True" Grid.Column="1" BackgroundColor="Transparent" RowHeight="60">
+                <TableRoot>
+                    <TableSection>
+                        <ViewCell x:Name="VersionViewCell">
+                            <Frame x:Name="VersionFrame" CornerRadius="20" BorderColor="#f6f8f9" Padding="10,0,10,0" HasShadow="False" BackgroundColor="#f6f8f9" HeightRequest="60">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnVersionTapped" />
+                                </Frame.GestureRecognizers>
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                    <Label Text="النسخة" TextColor="#181e2d" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" Spacing="1">
+                                        <ActivityIndicator x:Name="VersionAI" Color="Gray" IsVisible="false" VerticalOptions="Center" HeightRequest="20" />
+                                        <Label x:Name="VersionLabel" Text="1.0.0" TextColor="#181e2d" VerticalOptions="Center" FontFamily="Poppins-Medium" FontSize="16" FlowDirection="LeftToRight" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+
+                        <ViewCell Height="10" IsEnabled="False">
+                            <StackLayout HeightRequest="10" />
+                        </ViewCell>
+
+                        <ViewCell>
+                            <Frame x:Name="RateFrame" CornerRadius="20" BorderColor="#f6f8f9" Padding="10,0,10,0" HasShadow="False" BackgroundColor="#f6f8f9" HeightRequest="60">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnRateTapped" />
+                                </Frame.GestureRecognizers>
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                    <Label Text="قيم التطبيق" TextColor="#181e2d" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                                    <Image Source="arrowleft.png" HeightRequest="14" WidthRequest="14" HorizontalOptions="EndAndExpand" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+
+                        <ViewCell IsEnabled="False">
+                            <StackLayout HeightRequest="30" />
+                        </ViewCell>
+
+                        <ViewCell>
+                            <Frame x:Name="PPFrame" CornerRadius="20" BorderColor="#f6f8f9" Padding="10,0,10,0" HasShadow="False" BackgroundColor="#f6f8f9" HeightRequest="55">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPPTapped" />
+                                </Frame.GestureRecognizers>
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                    <Label Text="سياسة الخصوصية" TextColor="#181e2d" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                                    <Image Source="arrowleft.png" HeightRequest="14" WidthRequest="14" HorizontalOptions="EndAndExpand" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+
+                        <ViewCell Height="10" IsEnabled="False">
+                            <StackLayout HeightRequest="10" />
+                        </ViewCell>
+
+                        <ViewCell>
+                            <Frame x:Name="TSFrame" CornerRadius="20" BorderColor="#f6f8f9" Padding="10,0,10,0" HasShadow="False" BackgroundColor="#f6f8f9" HeightRequest="55">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTSTapped" />
+                                </Frame.GestureRecognizers>
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                    <Label Text="شروط الخدمة" TextColor="#181e2d" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                                    <Image Source="arrowleft.png" HeightRequest="14" WidthRequest="14" HorizontalOptions="EndAndExpand" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+
+        </Grid>-->
+        <WebView Grid.Row="1" Grid.RowSpan="2" IsVisible="false" x:Name="WV" VerticalOptions="FillAndExpand" Margin="5,5,5,5"/>
+
+    </Grid>
+</ContentPage>

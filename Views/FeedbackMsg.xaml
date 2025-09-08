@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:extensions="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:helpers="clr-namespace:Ang7.Helpers" xmlns:system="clr-namespace:System;assembly=netstandard"  xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" NavigationPage.HasNavigationBar="False" x:Class="Ang7.Views.FeedbackMsg">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,20,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    
+    <Grid BackgroundColor="LightGray" RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" RowDefinitions="1*,9*">
+        <ffimage:CachedImage Grid.Row="0" Margin="0,10,20,0" Source="back.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="EndAndExpand">
+            <ffimage:CachedImage.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Onback_Clicked" />
+            </ffimage:CachedImage.GestureRecognizers>
+        </ffimage:CachedImage>
+        <Label x:Name="TitleLabel" Grid.Row="0" Text="رد المقترحات والشكاوي" FontSize="18" FontFamily="Poppins-Medium" TextColor="Black" Margin="0,10,0,0" HorizontalOptions="Center" VerticalOptions="Center" />
+        <!--<ImageButton Grid.Row="0" Margin="20,15,0,15" Source="refresh.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" Clicked="OnRefresh_Clicked" HorizontalOptions="StartAndExpand"/>
+        -->
+        <CollectionView x:Name="CV" Grid.Row="1" Margin="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" SelectionMode="None" ItemsSource="{Binding Myfbs}" FlowDirection="RightToLeft">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border BackgroundColor="Transparent" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Padding="0">
+                        <Grid VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+                            <!--<extensions:Expander x:Name="MainExpander" IsExpanded="{Binding IsExpanderExpanded}" PropertyChanged="OnExpanderPropertyChanged">
+                                <extensions:Expander.Header>
+                                    <SwipeView>
+                                        <SwipeView.LeftItems>
+                                            <SwipeItems>
+                                                <SwipeItem Text="حذف" IconImageSource="delswipe.png" BackgroundColor="LightPink" Invoked="OnDeleteSwipeItemInvoked" CommandParameter="{Binding .}" />
+                                            </SwipeItems>
+                                        </SwipeView.LeftItems>
+                                        <Grid HorizontalOptions="FillAndExpand" BackgroundColor="White" ColumnDefinitions="*,3*">
+                                            <BoxView BackgroundColor="#A0A4C9" Opacity="0.2" />
+                                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0,5">
+                                                <Label Text="{Binding Dayname}" TextColor="#6670CC" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" />
+                                                <Label Text="{Binding Day}" TextColor="#FF5151" FontSize="20" HorizontalOptions="Center" FontAttributes="Bold" />
+                                                <Label Text="{Binding Month}" TextColor="#6670CC" FontSize="12" Margin="0,-10,0,0" HorizontalOptions="Center" FontAttributes="Bold" />
+                                                <Label TextColor="#6670CC" FontSize="12" Margin="0,-10,0,0" HorizontalOptions="Center" FontAttributes="Bold" FlowDirection="RightToLeft">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="{Binding ampm}" />
+                                                            <Span Text="{Binding Hour}" />
+                                                            <Span Text="{Binding min}" />
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                            </StackLayout>
+                                            <StackLayout Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="20">
+                                                <Label Text="{Binding Title, StringFormat='محتوي رسالتك ({0}) :'}" TextColor="Black" FontSize="15" VerticalOptions="Start" HorizontalOptions="Start" FlowDirection="RightToLeft" />
+                                                <Label Text="{Binding Info}" TextColor="Black" FontSize="15" VerticalOptions="Center" HorizontalOptions="Center" />
+                                            </StackLayout>
+                                        </Grid>
+                                    </SwipeView>
+                                </extensions:Expander.Header>
+
+                                <Grid HorizontalOptions="FillAndExpand" BackgroundColor="White" ColumnDefinitions="*,3*" x:Name="DetailsView" IsVisible="False">
+                                    <BoxView BackgroundColor="#A0A4C9" Opacity="0.2" />
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0,5">
+                                        <Label Text="{Binding RDayname}" TextColor="#998F33" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" />
+                                        <Label Text="{Binding RDay}" TextColor="#00AEAE" FontSize="20" HorizontalOptions="Center" FontAttributes="Bold" />
+                                        <Label Text="{Binding RMonth}" TextColor="#998F33" FontSize="12" Margin="0,-10,0,0" HorizontalOptions="Center" FontAttributes="Bold" />
+                                        <Label TextColor="#998F33" FontSize="12" Margin="0,-10,0,0" HorizontalOptions="Center" FontAttributes="Bold" FlowDirection="RightToLeft">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Rampm}" />
+                                                    <Span Text="{Binding RHour}" />
+                                                    <Span Text="{Binding Rmin}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </StackLayout>
+                                    <StackLayout Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="20">
+                                        <Label Text="رد المدير :" TextColor="Black" FontSize="15" VerticalOptions="Start" HorizontalOptions="Start" FlowDirection="RightToLeft" />
+                                        <Label Text="{Binding Replied }" TextColor="Black" FontSize="15" VerticalOptions="Center" HorizontalOptions="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </extensions:Expander>-->
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

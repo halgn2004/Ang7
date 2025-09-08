@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:vms="clr-namespace:Ang7.ViewModels" xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:helpers="clr-namespace:Ang7.Helpers" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" xmlns:fftransformation="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Compat.Transformations" mc:Ignorable="d" NavigationPage.HasNavigationBar="False" BackgroundColor="#ffffff" x:Class="Ang7.Views.AL_Profile">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,20,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*">
+            <ScrollView Grid.Row="0">
+                <Grid RowDefinitions="350,*">
+                    <Grid Grid.Row="0" RowDefinitions="*,Auto,Auto">
+                        <ffimage:CachedImage Grid.Row="0" Grid.RowSpan="3" Source="{Binding User.CP}" Aspect="AspectFill" BackgroundColor="{StaticResource BlackColor}" />
+                        <Grid Grid.Row="0" Grid.RowSpan="3" BackgroundColor="{StaticResource DarkColor}" Opacity="0.75" />
+
+                        <ffimage:CachedImage Grid.Row="1" Source="{Binding User.PP}" Aspect="AspectFit" Style="{StaticResource ProfileStyle}">
+                            <ffimage:CachedImage.Transformations>
+                                <fftransformation:CircleTransformation BorderSize="0" BorderHexColor="#FF0000" />
+                            </ffimage:CachedImage.Transformations>
+                            <ffimage:CachedImage.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnPPTapped" />
+                            </ffimage:CachedImage.GestureRecognizers>
+                        </ffimage:CachedImage>
+                        <StackLayout Grid.Row="2" Margin="0, 0, 0, 60">
+                            <Label Text="{Binding User.Email}" Style="{StaticResource NameStyle}">
+                                <Label.Behaviors>
+                                    <toolkit:TouchBehavior LongPressCommand="{Binding CopyLongPress}" LongPressCommandParameter="{Binding User.Email}" LongPressDuration="300" />
+                                </Label.Behaviors>
+                            </Label>
+                        </StackLayout>
+                    </Grid>
+
+                    <StackLayout Grid.Row="1" BackgroundColor="White" VerticalOptions="FillAndExpand" Padding="10" Spacing="5">
+                        <Border Style="{StaticResource AL_ProfileBorder}" HeightRequest="50">
+                            <Grid ColumnDefinitions="Auto,100,15,*" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnNameTapped" />
+                                </Grid.GestureRecognizers>
+                                <Grid.Behaviors>
+                                    <toolkit:TouchBehavior LongPressCommand="{Binding CopyLongPress}" LongPressCommandParameter="{Binding User.Name}" LongPressDuration="1000" />
+                                </Grid.Behaviors>
+                                <ffimage:CachedImage Grid.Column="0" Source="profile_name.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                <Label Grid.Column="1" Text="الأسم" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" Margin="5,0,0,0" />
+                                <Label Grid.Column="2" Text=":" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                                <Label Grid.Column="3" Text="{Binding User.Name}" TextColor="#888888" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                            </Grid>
+                        </Border>
+                        <Border Style="{StaticResource AL_ProfileBorder}"  HeightRequest="50">
+                            <Grid ColumnDefinitions="Auto,100,15,*" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTSTapped" />
+                                </Grid.GestureRecognizers>
+                                <Grid.Behaviors>
+                                    <toolkit:TouchBehavior LongPressCommand="{Binding CopyLongPress}" LongPressCommandParameter="{Binding User.Phone}" LongPressDuration="1000" />
+                                </Grid.Behaviors>
+                                <ffimage:CachedImage Grid.Column="0" Source="profile_phone.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                <Label Grid.Column="1" Text="الهاتف" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" Margin="5,0,0,0" />
+                                <Label Grid.Column="2" Text=":" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                                <Label Grid.Column="3" Text="{Binding User.Phone}" TextColor="#888888" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                            </Grid>
+                        </Border>
+                        <Border Style="{StaticResource AL_ProfileBorder}" HeightRequest="{Binding BIOHigh}" IsVisible="{Binding IsTeacher}">
+                            <Grid ColumnDefinitions="Auto,100,15,*" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnBIOTapped" />
+                                </Grid.GestureRecognizers>
+                                <Grid.Behaviors>
+                                    <toolkit:TouchBehavior LongPressCommand="{Binding CopyLongPress}" LongPressCommandParameter="{Binding User.Bio}" LongPressDuration="1000" />
+                                </Grid.Behaviors>
+                                <ffimage:CachedImage Grid.Column="0" Source="profile_bio.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                <Label Grid.Column="1" Text="السيرة الذاتية " VerticalOptions="Center" HorizontalOptions="Start" FontSize="12" FontFamily="Poppins-Medium" Margin="5,0,0,0" />
+                                <Label Grid.Column="2" Text=":" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                                <Label Grid.Column="3" Text="{Binding User.Bio}" TextColor="#888888" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" />
+                            </Grid>
+                        </Border>
+                        <Border Style="{StaticResource AL_ProfileBorder}" IsVisible="{Binding IsTeacher}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSubjTapped" />
+                            </Border.GestureRecognizers>
+                            <StackLayout Orientation="Vertical" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Spacing="0">
+                                <Label Text="المواد" TextColor="#181e2d" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Title" FontFamily="Poppins-Medium" />
+                                <CollectionView ItemsSource="{Binding Subjects}" HeightRequest="{Binding SubjHigh}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                                <ffimage:CachedImage Source="subject.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit">
+                                                    <ffimage:CachedImage.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vms:AL_ProfileViewModel}}, Path=EditSubjectCommand}" CommandParameter="{Binding .}" />
+                                                    </ffimage:CachedImage.GestureRecognizers>
+                                                </ffimage:CachedImage>
+                                                <Label Text="{Binding Name}" TextColor="#888888" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" Margin="10,0,0,0">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vms:AL_ProfileViewModel}}, Path=EditSubjectCommand}" CommandParameter="{Binding .}" />
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+                        </Border>
+                        <Border Style="{StaticResource AL_ProfileBorder}" HeightRequest="50">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCHPWTapped" />
+                            </Border.GestureRecognizers>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                <ffimage:CachedImage Source="profile_changepw.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="16" FontFamily="Poppins-Medium" Margin="5,0,0,0" Text="تغيير كلمة مرور حسابي" TextColor="{StaticResource colorgreen}" />
+                            </StackLayout>
+                        </Border>
+                        <Border Style="{StaticResource AL_ProfileBorder}" HeightRequest="50">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDMATapped" />
+                            </Border.GestureRecognizers>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                <ffimage:CachedImage Source="popupmsgerror.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="16" FontFamily="Poppins-Medium" Margin="5,0,0,0" Text="ايقاف الحساب الخاص بي" TextColor="{StaticResource colorRedD60}" />
+                            </StackLayout>
+                        </Border>
+                        <Border Style="{StaticResource AL_ProfileBorder}" HeightRequest="50" Stroke="{StaticResource colorRedD60}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDMAFTapped" />
+                            </Border.GestureRecognizers>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                <ffimage:CachedImage Source="mi_caccreq2.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="16" FontFamily="Poppins-Medium" Margin="5,0,0,0" Text="حذف الحساب الخاص بي" TextColor="{StaticResource colorRedD60}" />
+                            </StackLayout>
+                        </Border>
+                    </StackLayout>
+                </Grid>
+            </ScrollView>
+            <ffimage:CachedImage Grid.Row="0" Margin="0,20,30,0" HeightRequest="50" WidthRequest="50" Source="close.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="EndAndExpand" VerticalOptions="Start">
+                <ffimage:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Onback_Clicked" />
+                </ffimage:CachedImage.GestureRecognizers>
+            </ffimage:CachedImage>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

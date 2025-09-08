@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+             xmlns:pages="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui" 
+                 xmlns:handlers="clr-namespace:Ang7.Handlers" 
+                 CloseWhenBackgroundIsClicked="False"
+             mc:Ignorable="d"
+             x:Class="Ang7.Views.PopUp.Get2EntryText">
+    <Border StrokeShape="RoundRectangle 25,25,25,25" FlowDirection="RightToLeft" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Padding="24,0,24,30" Margin="24,0,24,24" BackgroundColor="White">
+        <StackLayout HorizontalOptions="Center" Spacing="5" Orientation="Vertical" >
+            <Label x:Name="HeadLabel" Text="Confirm" TextColor="Black" FontSize="16" FontAttributes="Bold" FontFamily="Poppins-Regular" HorizontalTextAlignment="Start"/>
+            <Entry x:Name="entry" Style="{StaticResource Entry}" HorizontalOptions="FillAndExpand" Margin="0,10,0,10"/>
+            <StackLayout HorizontalOptions="Center" Spacing="5" FlowDirection="RightToLeft">
+                <!--<Entry x:Name="entry2" HorizontalOptions="FillAndExpand" Style="{StaticResource Editor}" Margin="0,10,0,10" HeightRequest="150" />
+                -->
+                <handlers:EditorWithoutUnderline x:Name="entry2" FontSize="16" Margin="0,10,0,10" PlaceholderColor="#DDDDDD" AutoSize="TextChanges" HeightRequest="200" MinimumWidthRequest="200" HorizontalOptions="FillAndExpand" MinimumHeightRequest="150" FontFamily="Poppins-Regular" FlowDirection="LeftToRight" />
+                <BoxView HeightRequest="1" BackgroundColor="#DEDEDE" Color="#DEDEDE" Margin="0,-5,0,0" />
+            </StackLayout>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                <Button x:Name="NoBut" Text="No" BorderColor="#DB0D0D" BackgroundColor="#DB0D0D" HorizontalOptions="Center" Clicked="OnNoButClick" Grid.Column="0"
+                    Style="{StaticResource DarkBut}"  WidthRequest="120" HeightRequest="60" FontFamily="Poppins-SemiBold"/>
+                <Button x:Name="YesBut" Text="Yes" BorderColor="#248d35" BackgroundColor="#248d35" HorizontalOptions="Center" Clicked="OnYesButClick" Grid.Column="1"
+                    Style="{StaticResource DarkBut}"  WidthRequest="120" HeightRequest="60" FontFamily="Poppins-SemiBold"/>
+            </Grid>
+            <!--<Label x:Name="ErrorMsg" Text="LegendKnight" HorizontalOptions="Center" TextColor="Red" IsVisible="False" />-->
+        </StackLayout>
+    </Border>
+</pages:PopupPage>

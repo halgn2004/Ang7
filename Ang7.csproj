@@ -1,0 +1,159 @@
+﻿ <Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net9.0-android;net9.0-ios;</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>Ang7</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+
+		<!-- Display name -->
+		<ApplicationTitle>أنجح</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.onmediawll.ang7</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+		<ApplicationVersion>16</ApplicationVersion>
+
+		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
+		<WindowsPackageType>None</WindowsPackageType>
+		<!-- LK -->
+		<!--<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>-->
+		
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<DefaultLanguage>ar</DefaultLanguage>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+	  <AndroidPackageFormat>aab</AndroidPackageFormat>
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+	  <AndroidPackageFormat>aab</AndroidPackageFormat>
+	</PropertyGroup>
+
+	<!-- IOS Debug Mode Emulator 
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
+		<RuntimeIdentifiers>iossimulator-x64</RuntimeIdentifiers>
+  		<PlatformTarget>x64</PlatformTarget>
+	</PropertyGroup> -->
+	<!-- iOS Physical Device 
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
+    	<RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
+    	<PlatformTarget>arm64</PlatformTarget>
+	</PropertyGroup>-->
+
+	<!-- IOS Release Mode  *ISAANG7* 
+		<RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
+  		<PlatformTarget>arm64</PlatformTarget>
+
+	  	<ProvisioningType>manual</ProvisioningType>
+		<CodesignKey>Apple Distribution: Mohand Ibrahim (ULC59MPPVW)</CodesignKey>
+		<CodesignProvision>dev</CodesignProvision>-->
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
+		<Aot>true</Aot>
+		<EnableLLVM>true</EnableLLVM>
+		<MtouchExtraArgs>--aot-options=-O=gsharedvt</MtouchExtraArgs>
+		<EnableTrimAnalyzer>false</EnableTrimAnalyzer>
+		
+
+	</PropertyGroup>
+	
+
+	 <!--IOS
+	 <PropertyGroup>
+		<SatelliteResourceLanguages>ar</SatelliteResourceLanguages>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<MtouchLink>None</MtouchLink>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<MtouchLink>SdkOnly</MtouchLink>
+		<PublishTrimmed>true</PublishTrimmed>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+	  <BuildIpa>True</BuildIpa>
+	  <MtouchDebug>True</MtouchDebug>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
+	  <BuildIpa>True</BuildIpa>
+	  <MtouchDebug>True</MtouchDebug>
+	</PropertyGroup>-->
+	 
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.png" ForegroundFile="Resources\AppIcon\appconfig.png" Color="#ffffff" BaseSize="1024,1024" />
+
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#ffffff" BaseSize="324,324" />
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+	 
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-windows'">
+		<Compile Include="Platforms\Windows\**\*.cs" />
+	</ItemGroup>
+	 
+	<ItemGroup>
+	  <MauiFont Remove="Resources\Fonts\Poppins-Medium.ttf" />
+	</ItemGroup>
+	 
+	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\wt2.png" />
+	</ItemGroup>
+	 
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Fonts\Poppins-Medium.ttf" />
+	</ItemGroup>
+	 
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Images\wt2.png" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="CardsView.Maui" Version="1.1.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="11.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui.Core" Version="11.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="4.1.0" />
+		<PackageReference Include="FFImageLoadingCompat.Maui" Version="0.1.1" />
+		<PackageReference Include="FFImageLoadingCompat.Transformations" Version="0.1.1" />
+		<PackageReference Include="FullScreenStatus.Maui" Version="1.0.5" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.40" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.40" />
+		<PackageReference Include="Microsoft.Maui.Graphics" Version="9.0.40" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="PdfSharpCore" Version="1.3.67" />
+		<PackageReference Include="Plugin.Maui.AppRating" Version="1.2.1" />
+		<PackageReference Include="Plugin.Maui.ScreenSecurity" Version="1.2.0" />
+		<PackageReference Include="RGPopup.Maui" Version="1.1.2" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.116.1" />
+		<PackageReference Include="Vitvov.Maui.PDFView" Version="1.5.0" />
+	</ItemGroup>
+	
+	
+</Project>

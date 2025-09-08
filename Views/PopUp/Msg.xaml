@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+             xmlns:pages="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui" 
+             CloseWhenBackgroundIsClicked="False"                 
+             mc:Ignorable="d"
+             x:Class="Ang7.Views.PopUp.Msg">
+    <Border StrokeShape="RoundRectangle 25,25,25,25" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Padding="24" Margin="24,0,24,24" BackgroundColor="White">
+        <StackLayout HorizontalOptions="Center" Spacing="5" Orientation="Vertical" FlowDirection="RightToLeft" Padding="10,20">
+            <Label x:Name="HeadLabel" Text="Confirm" FontSize="20" FontAttributes="Bold" FontFamily="Poppins-Regular" HorizontalTextAlignment="Start" Padding="0,0,0,10"/>
+            <ScrollView x:Name="msgview">
+                <Label x:Name="MsgLabel" Text="LegendKnight" HorizontalTextAlignment="Start"
+                       FontSize="18" TextColor="#2f5252" FontFamily="Poppins-Regular" Padding="0,0,0,25" />
+            </ScrollView>
+            <Button x:Name="OKBut" Text="LK" HorizontalOptions="Center" Clicked="OnOKButClick"
+                    Style="{StaticResource DarkBut}" WidthRequest="200" HeightRequest="60" FontFamily="Poppins-SemiBold"/>
+        </StackLayout>
+    </Border>
+</pages:PopupPage>

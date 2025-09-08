@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:popup="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" x:Class="Ang7.Views.PopUp.SelectFolder">
+    <Border Style="{StaticResource PopUpBorder}">
+
+        <StackLayout HorizontalOptions="Center" Spacing="5" Orientation="Vertical" FlowDirection="RightToLeft">
+            <StackLayout Orientation="Horizontal" Padding="0,10,0,0" HorizontalOptions="FillAndExpand">
+                <Label x:Name="HeadLabel" TextColor="Black" FontSize="20" FontFamily="Poppins-SemiBold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="Center" />
+                <ffimage:CachedImage x:Name="BackButton" Source="popupselect_up.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="EndAndExpand" WidthRequest="45" HeightRequest="45" IsVisible="False">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBack_Clicked" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Padding="0,0,0,20" FlowDirection="RightToLeft">
+                <ListView x:Name="FolderList" ItemTapped="FolderList_ItemTapped">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image Source="Folder48.png" WidthRequest="30" HeightRequest="30" />
+                                    <Label Text="{Binding Name}" VerticalOptions="Center" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <Grid ColumnDefinitions="*,25,*" HorizontalOptions="FillAndExpand" HeightRequest="70" Margin="0,-10,0,0">
+                <ffimage:CachedImage Grid.Row="0" Grid.Column="0" Source="profilepage_save.png" Aspect="AspectFit" HorizontalOptions="Center" BackgroundColor="Transparent">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnConfirm_Clicked" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+                <ffimage:CachedImage Grid.Row="0" Grid.Column="2" Source="profilepage_dontsave.png" Aspect="AspectFit" HorizontalOptions="Center" BackgroundColor="Transparent">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnClose_Clicked" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+            </Grid>
+
+        </StackLayout>
+    </Border>
+</popup:PopupPage>

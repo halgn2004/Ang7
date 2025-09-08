@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                 xmlns:ct="clr-namespace:Ang7.CustomControls" 
+                 xmlns:pages="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui"
+                 x:Class="Ang7.Views.PopUp.VideoPlayer" 
+                 CloseWhenBackgroundIsClicked="False" 
+                 FlowDirection="RightToLeft">
+    <Grid RowDefinitions="62,*" BackgroundColor="{StaticResource VideoBackColor}">
+        <Grid Grid.Row="0" MinimumHeightRequest="62" HeightRequest="62">
+            <ffimage:CachedImage Grid.Row="0" Margin="{OnPlatform Android='-20,10',iOS='10'}" Source="close.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="StartAndExpand">
+                <ffimage:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked" />
+                </ffimage:CachedImage.GestureRecognizers>
+            </ffimage:CachedImage>
+            <Label x:Name="Title" Grid.Row="0" Text="LegendKnight" FontSize="18" FontFamily="Poppins-Medium" TextColor="White" Margin="0,10" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+        </Grid>
+        <toolkit:MediaElement x:Name="videoPlayer" Grid.Row="1" ShouldAutoPlay="True" ShouldShowPlaybackControls="True" BackgroundColor="{StaticResource VideoBackColor}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+        <ct:WatermarkControl Grid.Row="1" x:Name="WatermarkView" IsAnimationEnabled="True" />
+    </Grid>
+</pages:PopupPage>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:ct="clr-namespace:Ang7.CustomControls" xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" x:Class="Ang7.Views.ImageViewPage" NavigationPage.HasNavigationBar="False" FlowDirection="RightToLeft">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,20,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>    
+    <ContentPage.Content>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" RowDefinitions="62,*" FlowDirection="RightToLeft">
+            <Grid Grid.Row="0" MinimumHeightRequest="62" HeightRequest="62">
+                <ffimage:CachedImage Grid.Row="0" Margin="{OnPlatform Android='-20,10',iOS='10'}" Source="popupselect_close.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="StartAndExpand">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackClicked" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+                <Label x:Name="Title" Grid.Row="0" Text="LegendKnight" FontSize="18" FontFamily="Poppins-Medium" TextColor="Black" Margin="0,10" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+            </Grid>
+            <!-- Wrap the CachedImage in a ScrollView to allow scrolling -->
+            <ScrollView Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <ffimage:CachedImage x:Name="ImageView" Aspect="AspectFit" LoadingPriority="High" VerticalOptions="Start" HorizontalOptions="FillAndExpand" LoadingPlaceholder="loading_placeholder.png" ErrorPlaceholder="error_placeholder.png" Loaded="OnImageLoaded"/>
+
+                <!--                
+                <Image x:Name="ImageView" Aspect="AspectFit" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+                -->
+            </ScrollView>
+            <ActivityIndicator Grid.Row="1" x:Name="ActivityIndicator" IsRunning="True" IsVisible="True" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Color="Black" />
+            <ct:WatermarkControl Grid.Row="1" x:Name="WatermarkView" IsAnimationEnabled="True" />
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

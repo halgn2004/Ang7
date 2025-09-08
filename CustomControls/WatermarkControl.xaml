@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" x:Class="Ang7.CustomControls.WatermarkControl" x:Name="WatermarkView" InputTransparent="True">
+    <Grid x:Name="AnimatedGrid" Opacity=".5" IsEnabled="False" InputTransparent="True" HeightRequest="75" WidthRequest="90" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+        <ffimage:CachedImage x:Name="WatermarkImage" Source="watermark.png" BackgroundColor="Transparent" Aspect="AspectFit" />
+        <Border Style="{StaticResource WaterMarkBorder}">
+            <Label x:Name="WaterMarkBadge" FontSize="10" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+        </Border>
+    </Grid>
+</ContentView>

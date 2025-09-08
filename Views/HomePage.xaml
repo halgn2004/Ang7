@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:viewModels="clr-namespace:Ang7.ViewModels" xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" xmlns:Helpers="clr-namespace:Ang7.Helpers" x:Class="Ang7.Views.HomePage" FlowDirection="RightToLeft" NavigationPage.HasNavigationBar="False" BackgroundColor="White" xmlns:ct="clr-namespace:Ang7.CustomControls">
+    <!--<ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" /> ct:CustomStatusBarBehavior.StatusBarColor="White" ct:CustomStatusBarBehavior.StatusBarStyle="DarkContent"
+    </ContentPage.Behaviors>-->
+
+    <ContentPage.BindingContext>
+        <viewModels:CarouselHomePageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,0,0,-20" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <Grid BackgroundColor="White" RowSpacing="0" ColumnSpacing="0" RowDefinitions="64*,26*">
+        <Grid Grid.Row="0" BackgroundColor="Transparent" RowDefinitions="*,Auto">
+            <cards:CarouselView IndicatorView="indicatorView" ItemsSource="{Binding Items}" SelectedIndex="{Binding CurrentIndex}" SlideShowDuration="3500">
+                <x:Arguments>
+                    <proc:CarouselProcessor OpacityFactor="0" RotationFactor="0.1" ScaleFactor="0.5" />
+                </x:Arguments>
+                <cards:CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView>
+                            <Border VerticalOptions="Fill" HorizontalOptions="Fill" Padding="10,20" BackgroundColor="{Binding Color}">
+                                <Grid BackgroundColor="Transparent" RowSpacing="0" ColumnSpacing="0" RowDefinitions="6*,4*">
+                                    <Image Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Source="{Binding Source}" />
+                                    <StackLayout Grid.Row="1" Orientation="Vertical" HorizontalOptions="Center" Margin="30,0">
+                                        <Label Helpers:AutoFitFontSizeEffectParameters.MinFontSize="10" Helpers:AutoFitFontSizeEffectParameters.MaxFontSize="20" FontFamily="Poppins-SemiBold" FontAttributes="Bold" TextColor="#000000" Text="{Binding Title}" FontSize="Title" MaxLines="1" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Label Helpers:AutoFitFontSizeEffectParameters.MinFontSize="10" Helpers:AutoFitFontSizeEffectParameters.MaxFontSize="20" FontFamily="Poppins-Regular" FontSize="Subtitle" TextColor="#A4A4A4" Text="{Binding Desc}" MaxLines="{Binding MaxLines}" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </Border>
+                        </ContentView>
+                    </DataTemplate>
+                </cards:CarouselView.ItemTemplate>
+            </cards:CarouselView>
+            <IndicatorView x:Name="indicatorView" Grid.Row="1" Margin="10" HorizontalOptions="Center" IndicatorColor="LightSkyBlue" SelectedIndicatorColor="DarkBlue" />
+        </Grid>
+        <Image x:Name="SettingButton" Grid.Row="0" Margin="25" Source="settings.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" HeightRequest="{OnIdiom Phone=45,Tablet=90}" WidthRequest="{OnIdiom Phone=45,Tablet=90}" FlexLayout.Grow="1" Aspect="AspectFit" VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnSettings_Clicked" />
+            </Image.GestureRecognizers>
+        </Image>
+        <Grid Grid.Row="1" BackgroundColor="Transparent" Padding="0,5,0,15" RowSpacing="1">
+            <Grid  RowSpacing="1" BackgroundColor="Transparent" RowDefinitions="2*,1*,2*">
+                <StackLayout Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Fill" Padding="30,0,30,5">
+                    <Button x:Name="SigninButton" Text="تسجيل دخول" Clicked="OnSignin_Clicked"  Style="{StaticResource DarkBut}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+                </StackLayout>
+                <Image Grid.Row="1" Source="line.png" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit" />
+                <StackLayout Grid.Row="2" HorizontalOptions="Fill" VerticalOptions="Fill" Padding="30,5,30,0">
+                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Orientation="Horizontal" Grid.Row="3" FlowDirection="RightToLeft">
+                        <Label x:Name="SignupLabel0" Text="لا تمتلك حساب؟" TextColor="#2D2D2D" Opacity=".5" FontFamily="Poppins-Medium" FontSize="14" />
+                        <Label x:Name="SignupLabel" Text="أنضم لنا الأن." TextColor="#1F557B" FontFamily="Poppins-SemiBold" FontSize="14">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSignupTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Orientation="Horizontal" Grid.Row="3" FlowDirection="RightToLeft">
+                        <Label x:Name="GuestLabel" Text="تصفح كزائر." TextColor="#1F557B" FontFamily="Poppins-SemiBold" FontSize="14">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnGuestTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+
+                </StackLayout>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

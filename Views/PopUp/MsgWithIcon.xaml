@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pages="clr-namespace:RGPopup.Maui.Pages;assembly=RGPopup.Maui" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" CloseWhenBackgroundIsClicked="False" mc:Ignorable="d" x:Class="Ang7.Views.PopUp.MsgWithIcon">
+    <Border StrokeShape="RoundRectangle 25,25,25,25"
+           VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Padding="44,44,44,44"
+            Margin="24"
+            BackgroundColor="White">
+        <StackLayout HorizontalOptions="Center" Spacing="5" FlowDirection="RightToLeft">
+
+            <ffimage:CachedImage x:Name="ErrorImage" DownsampleToViewSize="True" HorizontalOptions="Center" HeightRequest="52" WidthRequest="52"/>
+            <Label x:Name="MsgLabel"  HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                   FontSize="22" TextColor="#2f5252" FontFamily="Poppins-Medium" Padding="0,0,0,25" />
+
+            <Button x:Name="SubmitButton" BorderColor="#DB0D0D" BackgroundColor="#DB0D0D" HorizontalOptions="Center" Clicked="OnButClick"
+                    Style="{StaticResource DarkBut}"  WidthRequest="200" HeightRequest="60"/>
+
+        </StackLayout>
+    </Border>
+</pages:PopupPage>

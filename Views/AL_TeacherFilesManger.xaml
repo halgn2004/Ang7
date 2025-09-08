@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:vms="clr-namespace:Ang7.ViewModels" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:helpers="clr-namespace:Ang7.Helpers" xmlns:ffimage="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui" xmlns:fftransformation="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Compat.Transformations" mc:Ignorable="d" NavigationPage.HasNavigationBar="False" BackgroundColor="#ffffff" x:Class="Ang7.Views.AL_TeacherFilesManger">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,20,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Grid.Row="0" RowDefinitions="*">
+                <Grid Grid.Row="0" BackgroundColor="{StaticResource DarkColor}" Opacity="0.75" />
+
+                <ffimage:CachedImage Grid.Row="0" Margin="0,10,20,10" HeightRequest="50" WidthRequest="50" Source="close.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Onback_Clicked" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+                <ffimage:CachedImage Grid.Row="0" Margin="20,10,0,10" IsVisible="{Binding IsUpAvalible}" HeightRequest="50" WidthRequest="50" Source="up.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding UpClicked}" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+                <ffimage:CachedImage Grid.Row="0" Margin="0,10" HeightRequest="35" WidthRequest="35" Source="sus_add.png" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <ffimage:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AddnewClicked}" />
+                    </ffimage:CachedImage.GestureRecognizers>
+                </ffimage:CachedImage>
+            </Grid>
+            <ScrollView VerticalOptions="FillAndExpand">
+                <StackLayout Orientation="Vertical" VerticalOptions="Fill" HorizontalOptions="Center" FlowDirection="RightToLeft" Spacing="0">
+                    <CollectionView x:Name="ListViewRef" ItemsSource="{Binding MyFiles}" Margin="10,0">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border StrokeShape="RoundRectangle 20,20,20,20" Stroke="{Binding BorderColor}" Padding="10,0" Margin="0,5">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vms:AL_TeacherFilesMangerViewModel}}, Path=ItemTappedCommand}" CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid FlowDirection="RightToLeft" Padding="15,0,0,0" ColumnDefinitions="Auto,*,Auto">
+                                        <ffimage:CachedImage Grid.Column="0" Source="{Binding Image}" HeightRequest="48" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                        <Label Grid.Column="1" Text="{Binding Name}" TextColor="#888888" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" Margin="5,0,0,0" LineBreakMode="WordWrap" />
+                                        <ffimage:CachedImage Grid.Column="2" Source="mi_settings.png" HeightRequest="40" Margin="0" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit">
+                                            <ffimage:CachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BindingContext.OnSettingCommand, Source={x:Reference ListViewRef}}" CommandParameter="{Binding .}" />
+                                            </ffimage:CachedImage.GestureRecognizers>
+                                        </ffimage:CachedImage>
+                                    </Grid>
+                                    <!--<StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                    <ffimage:CachedImage Source="{Binding Image}" HeightRequest="48" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                    <Label Text="{Binding Name}" TextColor="#888888" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
+                                    <ffimage:CachedImage Source="mi_settings.png" HeightRequest="40" Margin="0,4" HorizontalOptions="EndAndExpand" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit">
+                                        <ffimage:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.OnSettingCommand, Source={x:Reference ListViewRef}}" CommandParameter="{Binding .}" />
+                                        </ffimage:CachedImage.GestureRecognizers>
+                                    </ffimage:CachedImage>
+                                </StackLayout>-->
+                                </Border>
+                                <!--
+                            <ViewCell>
+                                <Frame CornerRadius="20" BorderColor="#f6f8f9" Padding="10,0,10,0" HasShadow="False" Margin="0,10,0,10">
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill" FlowDirection="RightToLeft" Padding="15,0,10,0">
+                                        <ffimage:CachedImage Source="{Binding Image}" HeightRequest="48" HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit" />
+                                        <Label Text="{Binding Name}" TextColor="#888888" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" FontFamily="Poppins-Medium" Margin="0,2,0,0" />
+                                        <ffimage:CachedImage Source="mi_settings.png" HeightRequest="40" Margin="0,4" HorizontalOptions="EndAndExpand" VerticalOptions="Center" BackgroundColor="Transparent" FlexLayout.AlignSelf="Center" FlexLayout.Grow="1" Aspect="AspectFit">
+                                            <ffimage:CachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BindingContext.OnSettingCommand, Source={x:Reference ListViewRef}}" CommandParameter="{Binding .}" />
+                                            </ffimage:CachedImage.GestureRecognizers>
+                                        </ffimage:CachedImage>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>-->
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

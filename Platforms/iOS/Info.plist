@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>CFBundleExecutable</key>
+	<string></string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~iphone</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
+   	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Access to your photos is needed to upload a profile picture.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Access to the camera is required to take a profile picture.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Microphone access is required for video recording.</string>
+    <key>NSDocumentsUsageDescription</key>
+    <string>Access to your documents is required for this feature.</string>
+    <key>NSFileSystemUsageDescription</key>
+    <string>Access to your files is required to enhance app functionality.</string>
+    <key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+    <true/>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Access to your photo gallery is needed to upload a profile picture.</string>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+	<key>CFBundleIdentifier</key>
+	<string>com.onmediawll.ang7</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires access to your location to enhance user experience.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app does not use location services directly but requires this for compliance.</string>
+
+</dict>
+</plist>
