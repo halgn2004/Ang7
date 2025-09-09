@@ -2,22 +2,33 @@ workflows:
   ios-release:
     name: iOS Build & Publish
     integrations:
-      app_store_connect: "anga7"   # نفس الاسم اللي اخترته عند إعداد التكامل
+      app_store_connect: "anga7"
     environment:
       groups:
         - ios_code_signing
       vars:
-        DOTNET_VERSION: "9.0.x"
+        DOTNET_VERSION: "8.0.402"   # مستقر
         PROJECT_PATH: "Ang7.csproj"
     scripts:
-      - name: Install .NET and MAUI
+      - name: Install .NET SDK
         script: |
-          dotnet workload install maui ios
+          curl -L https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+          chmod +x dotnet-install.sh
+          ./dotnet-install.sh --version $DOTNET_VERSION
+          export PATH=$PATH:$HOME/.dotnet
+          dotnet --version   # للتأكد أنه اتسطب
+      - name: Install .NET MAUI workloads
+        script: |
+          export PATH=$PATH:$HOME/.dotnet
+          dotnet workload install maui
       - name: Restore dependencies
-        script: dotnet restore $PROJECT_PATH
+        script: |
+          export PATH=$PATH:$HOME/.dotnet
+          dotnet restore $PROJECT_PATH
       - name: Build iOS
         script: |
-          dotnet publish $PROJECT_PATH -f net9.0-ios -c Release \
+          export PATH=$PATH:$HOME/.dotnet
+          dotnet publish $PROJECT_PATH -f net8.0-ios -c Release \
             -p:RuntimeIdentifier=ios-arm64 \
             -p:PlatformTarget=arm64 \
             -o ./artifacts/ios/
