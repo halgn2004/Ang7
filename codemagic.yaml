@@ -1,63 +1,74 @@
 workflows:
   ios-release:
     name: iOS Build & Publish
+    max_build_duration: 120
+    instance_type: mac_mini_m2
     integrations:
       app_store_connect: "anga7"
     environment:
       ios_signing:
-        provisioning_profiles:
-          - angah_provisioning
-        certificates:
-          - angah_certific
+        distribution_type: app_store
+        bundle_identifier: "com.onmediawll.ang7"
       vars:
-        DOTNET_VERSION: "9.0.100"
+        DOTNET_PATH: $CM_BUILD_DIR/dotnet
+        DOTNET: $CM_BUILD_DIR/dotnet/dotnet
         PROJECT_PATH: "Ang7.csproj"
         DOTNET_CLI_TELEMETRY_OPTOUT: "1"
         BUNDLE_ID: "com.onmediawll.ang7"
+        APP_STORE_APPLE_ID: "your_app_id_here"  # استبدل بـ App Store ID الخاص بتطبيقك
 
     scripts:
-      - name: Install .NET SDK (user-local)
-        script: |
-          curl -L https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
-          chmod +x dotnet-install.sh
-          ./dotnet-install.sh --version $DOTNET_VERSION
-          export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"
-          dotnet --version
-
-      - name: Verify .NET installation
-        script: |
-          export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"
-          which dotnet
-          dotnet --version
-
       - name: Install .NET SDK
         script: |
-          curl -L https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+          wget https://dot.net/v1/dotnet-install.sh
           chmod +x dotnet-install.sh
-          ./dotnet-install.sh --version $DOTNET_VERSION
-          export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
-          dotnet --version
+          ./dotnet-install.sh --install-dir $DOTNET_PATH
 
-      - name: Restore dependencies
+      - name: Install MAUI
         script: |
-          export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"
-          dotnet restore $PROJECT_PATH
+          $DOTNET nuget locals all --clear
+          $DOTNET workload install ios maui \
+            --source https://aka.ms/dotnet6/nuget/index.json \
+            --source https://api.nuget.org/v3/index.json
 
-      - name: Build iOS
+      - name: Set Info.plist values
         script: |
-          export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
-          dotnet publish $PROJECT_PATH -f net9.0-ios -c Release \
+          # تحديد قيم Info.plist تلقائياً
+          PLIST=$CM_BUILD_DIR/Platforms/iOS/Info.plist
+          PLIST_BUDDY=/usr/libexec/PlistBuddy
+          $PLIST_BUDDY -c "Add :ITSAppUsesNonExemptEncryption bool false" $PLIST
+
+      - name: Set build version and build the app
+        script: |
+          LATEST_BUILD_NUMBER=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID")
+          if [ -z $LATEST_BUILD_NUMBER ]; then
+            UPDATED_BUILD_NUMBER=$BUILD_NUMBER
+          else
+            UPDATED_BUILD_NUMBER=$(($LATEST_BUILD_NUMBER + 1))
+          fi
+          
+          CERT_NAME=$(keychain list-certificates | jq -r '.[] | .common_name')
+          PROFILE_NAME=$(find ~/Library/MobileDevice/Provisioning\ Profiles -name "*.mobileprovision" -execdir sh -c '/usr/libexec/PlistBuddy -c "print :Name" /dev/stdin <<< $(security cms -D -i {})' \;)
+          
+          $DOTNET publish $PROJECT_PATH -f net9.0-ios \
+            -c Release \
+            -p:BuildIpa=True \
+            -p:ApplicationDisplayVersion="1.0.0" \
+            -p:ApplicationVersion=$UPDATED_BUILD_NUMBER \
             -p:RuntimeIdentifier=ios-arm64 \
-            -p:PlatformTarget=arm64 \
-            -p:CodesignKey="Apple Distribution" \
-            -p:CodesignProvision="angah_provisioning" \
-            -o ./artifacts/ios/
+            -p:CodesignKey="$CERT_NAME" \
+            -p:CodesignProvision="$PROFILE_NAME" \
+            -o ./artifacts
 
     artifacts:
-      - ./artifacts/ios/**/*.ipa
+      - ./artifacts/*.ipa
 
     publishing:
       app_store_connect:
         auth: integration
         submit_to_testflight: true
+        beta_groups:
+          - "Internal Testers"  # اختياري - أضف مجموعات المختبرين
         submit_to_app_store: true
+        cancel_previous_submissions: true
+        release_type: MANUAL  # أو AFTER_APPROVAL أو SCHEDULED
