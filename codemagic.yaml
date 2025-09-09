@@ -1,0 +1,36 @@
+workflows:
+  ios-release:
+    name: iOS Release Build
+    max_build_duration: 120
+    environment:
+      groups:
+        - appstore_credentials   # فيه APPLE_ID, APP_SPECIFIC_PASSWORD, APP_STORE_TEAM_ID
+        - ios_code_signing       # فيه الشهادات وملفات provisioning اللي رفعتها
+      vars:
+        DOTNET_VERSION: "9.0.x"
+        PROJECT_PATH: "Ang7.csproj"   # عدّل لو اسم ملفك مختلف
+    scripts:
+      - name: Install .NET and MAUI
+        script: |
+          dotnet nuget locals all --clear
+          dotnet workload install maui ios
+      - name: Restore dependencies
+        script: |
+          dotnet restore $PROJECT_PATH
+      - name: Build iOS Release
+        script: |
+          dotnet publish $PROJECT_PATH -f net9.0-ios -c Release \
+            -p:RuntimeIdentifier=ios-arm64 \
+            -p:PlatformTarget=arm64 \
+            -p:CodesignKey="$CM_CERTIFICATE" \
+            -p:CodesignProvision="$CM_PROVISIONING_PROFILE" \
+            -o ./artifacts/ios/
+    artifacts:
+      - ./artifacts/ios/**/*.ipa
+    publishing:
+      app_store_connect:
+        apple_id: $APPLE_ID
+        app_specific_password: $APP_SPECIFIC_PASSWORD
+        team_id: $APP_STORE_TEAM_ID
+        submit_to_testflight: true
+        submit_to_app_store: true
