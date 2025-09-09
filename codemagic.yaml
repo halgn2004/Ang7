@@ -15,44 +15,31 @@ workflows:
         PROJECT_PATH: "Ang7.csproj"
         DOTNET_ROOT: "$HOME/.dotnet"
         DOTNET_CLI_TELEMETRY_OPTOUT: "1"
-    scripts:
-      - name: Install .NET SDK
+   scripts:
+      - name: Install .NET SDK (user-local)
         script: |
           curl -L https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
           chmod +x dotnet-install.sh
-          ./dotnet-install.sh --version $DOTNET_VERSION --install-dir $HOME/.dotnet
-          
-      - name: Verify dotnet install
-        script: |
+          ./dotnet-install.sh --version $DOTNET_VERSION
           export PATH=$PATH:$HOME/.dotnet
-          export DOTNET_ROOT=$HOME/.dotnet
-          which dotnet
           dotnet --version
-          
       - name: Install .NET MAUI workloads
         script: |
           export PATH=$PATH:$HOME/.dotnet
-          export DOTNET_ROOT=$HOME/.dotnet
-          dotnet workload install maui --skip-manifest-update --verbosity minimal --source https://api.nuget.org/v3/index.json
-          
+          dotnet workload install maui --skip-manifest-update --verbosity minimal
       - name: Restore dependencies
         script: |
           export PATH=$PATH:$HOME/.dotnet
-          export DOTNET_ROOT=$HOME/.dotnet
-          dotnet restore $PROJECT_PATH --verbosity minimal
-          
-      - name: Build iOS
+          dotnet restore $PROJECT_PATH
+        - name: Verify dotnet install
         script: |
-          export PATH=$PATH:$HOME/.dotnet
-          export DOTNET_ROOT=$HOME/.dotnet
-          dotnet publish $PROJECT_PATH -f net9.0-ios -c Release \
-            -p:RuntimeIdentifier=ios-arm64 \
-            -p:PlatformTarget=arm64 \
-            -p:ArchiveOnBuild=true \
-            -p:EnableAssemblyILStripping=false \
-            -o ./artifacts/ios/ \
-            --verbosity minimal
-            
+           which dotnet
+          dotnet --version      
+      - name: Build iOS
+    script: |
+      dotnet publish $PROJECT_PATH -f net9.0-ios -c Release \
+        -p:RuntimeIdentifier=ios-arm64 \
+        -o ./artifacts/ios/
     artifacts:
       - ./artifacts/ios/**/*.ipa
     publishing:
