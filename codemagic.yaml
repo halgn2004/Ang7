@@ -24,27 +24,26 @@ workflows:
           chmod +x dotnet-install.sh
           ./dotnet-install.sh --install-dir $DOTNET_PATH --channel 9.0
 
-      - name: Install iOS MAUI workload only
+      - name: Install MAUI iOS workload only
         script: |
+          # تنظيف كامل
           $DOTNET nuget locals all --clear
-          $DOTNET workload install ios maui \
-            --skip-manifest-update \
-            --source https://api.nuget.org/v3/index.json
+          $DOTNET workload clean || true
           
+          # إزالة أي workloads موجودة
+          $DOTNET workload uninstall --all || true
+          
+          # تثبيت workloads مطلوبة لـ iOS فقط
+          $DOTNET workload install maui-ios --skip-manifest-update
+          
+          echo "Installed workloads:"
           $DOTNET workload list
-          $DOTNET --info
 
       - name: Set Info.plist values
         script: |
           PLIST=$CM_BUILD_DIR/Platforms/iOS/Info.plist
           PLIST_BUDDY=/usr/libexec/PlistBuddy
           $PLIST_BUDDY -c "Add :ITSAppUsesNonExemptEncryption bool false" $PLIST
-
-      - name: Restore packages for iOS only
-        script: |
-          $DOTNET restore Ang7.csproj \
-            --runtime ios-arm64 \
-            --verbosity normal
 
       - name: Build iOS app
         script: |
@@ -56,45 +55,36 @@ workflows:
             UPDATED_BUILD_NUMBER=$(($LATEST_BUILD_NUMBER + 1))
           fi
           
-          # الحصول على بيانات Code Signing بطريقة مختلفة
-          # استخدام المتغيرات المتوفرة في Codemagic
+          # الحصول على بيانات Code Signing
           CERT_NAME=$(keychain list-certificates | jq -r '.[] | select(.common_name | contains("Distribution")) | .common_name' | head -1)
-          PROFILE_UUID=$(find ~/Library/MobileDevice/Provisioning\ Profiles -name "*.mobileprovision" -exec security cms -D -i {} \; | plutil -extract UUID xml1 -o - -- - | xmllint --xpath "//string/text()" - | head -1)
           
-          # إذا لم نحصل على الشهادة، استخدم القيم المعروفة
           if [ -z "$CERT_NAME" ]; then
             CERT_NAME="iPhone Distribution: Mohand Ibrahim (ULC59MPPVW)"
           fi
           
-          # طباعة المتغيرات للتأكد
-          echo "CI Environment: $CI"
           echo "Build Number: $UPDATED_BUILD_NUMBER"
           echo "Certificate: $CERT_NAME"
-          echo "Profile UUID: $PROFILE_UUID"
           
-          # تنظيف البناء السابق
+          # تنظيف المشروع
           $DOTNET clean Ang7.csproj -c Release
           rm -rf obj bin
           
-          # بناء ونشر التطبيق في خطوة واحدة لتجنب مشكلة NoBuild
+          # بناء التطبيق
           $DOTNET publish Ang7.csproj \
             --framework net9.0-ios \
             --configuration Release \
             --runtime ios-arm64 \
-            --verbosity detailed \
+            --verbosity normal \
             -p:BuildIpa=True \
             -p:ApplicationDisplayVersion="1.1.6" \
             -p:ApplicationVersion=$UPDATED_BUILD_NUMBER \
             -p:CodesignKey="$CERT_NAME" \
             -p:CodesignProvision="angah_pdf" \
             -p:EnableCodeSigning=true \
-            -p:ArchiveOnBuild=true \
-            -p:RuntimeIdentifier=ios-arm64 \
-            -p:UseInterpreter=false \
-            --output ./artifacts
+            -p:ArchiveOnBuild=true
 
     artifacts:
-      - ./artifacts/*.ipa
+      - "**/*.ipa"
 
     publishing:
       app_store_connect:
