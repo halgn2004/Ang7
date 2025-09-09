@@ -15,7 +15,7 @@ workflows:
         PROJECT_PATH: "Ang7.csproj"
         DOTNET_CLI_TELEMETRY_OPTOUT: "1"
         BUNDLE_ID: "com.onmediawll.ang7"
-        APP_STORE_APPLE_ID: "your_app_id_here"  # استبدل بـ App Store ID الخاص بتطبيقك
+        APP_STORE_APPLE_ID: "6738999691"  # استبدل بـ App Store ID الخاص بتطبيقك
 
     scripts:
       - name: Install .NET SDK
@@ -28,7 +28,7 @@ workflows:
         script: |
           $DOTNET nuget locals all --clear
           $DOTNET workload install ios maui \
-            --source https://aka.ms/dotnet6/nuget/index.json \
+            --source https://aka.ms/dotnet9/nuget/index.json \
             --source https://api.nuget.org/v3/index.json
 
       - name: Set Info.plist values
