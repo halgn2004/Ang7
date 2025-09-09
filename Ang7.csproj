@@ -1,13 +1,10 @@
 ﻿ <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks Condition="'$(CI)' == 'true'">net8.0-ios</TargetFrameworks>
+		  <TargetFrameworks Condition="'$(CI)' == 'true'">net9.0-ios</TargetFrameworks>
   <!-- للتطوير المحلي -->
   <TargetFrameworks Condition="'$(CI)' != 'true'">net9.0-android;net9.0-ios</TargetFrameworks>
   
-  <!-- باقي الخصائص -->
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
-
 
 		<OutputType>Exe</OutputType>
 		<RootNamespace>Ang7</RootNamespace>
