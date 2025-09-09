@@ -12,10 +12,9 @@ workflows:
       vars:
         DOTNET_PATH: $CM_BUILD_DIR/dotnet
         DOTNET: $CM_BUILD_DIR/dotnet/dotnet
-        PROJECT_PATH: "Ang7.csproj"
         DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+        APP_STORE_APPLE_ID: "6738999691"
         BUNDLE_ID: "com.onmediawll.ang7"
-        APP_STORE_APPLE_ID: "6738999691"  # استبدل بـ App Store ID الخاص بتطبيقك
 
     scripts:
       - name: Install .NET SDK
@@ -50,10 +49,10 @@ workflows:
           CERT_NAME=$(keychain list-certificates | jq -r '.[] | .common_name')
           PROFILE_NAME=$(find ~/Library/MobileDevice/Provisioning\ Profiles -name "*.mobileprovision" -execdir sh -c '/usr/libexec/PlistBuddy -c "print :Name" /dev/stdin <<< $(security cms -D -i {})' \;)
           
-          $DOTNET publish $PROJECT_PATH -f net9.0-ios \
+          $DOTNET publish Ang7.csproj -f net9.0-ios \
             -c Release \
             -p:BuildIpa=True \
-            -p:ApplicationDisplayVersion="1.0.0" \
+            -p:ApplicationDisplayVersion="1.1.6" \
             -p:ApplicationVersion=$UPDATED_BUILD_NUMBER \
             -p:RuntimeIdentifier=ios-arm64 \
             -p:CodesignKey="$CERT_NAME" \
@@ -68,7 +67,7 @@ workflows:
         auth: integration
         submit_to_testflight: true
         beta_groups:
-          - "Internal Testers"  # اختياري - أضف مجموعات المختبرين
+          - "Internal Testers"
         submit_to_app_store: true
         cancel_previous_submissions: true
-        release_type: MANUAL  # أو AFTER_APPROVAL أو SCHEDULED
+        release_type: MANUAL
