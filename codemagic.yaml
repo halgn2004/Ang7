@@ -2,7 +2,7 @@ workflows:
   ios-release:
     name: iOS Build & Publish
     integrations:
-      app_store_connect: "My API Key Name"   # نفس الاسم اللي اخترته عند إعداد التكامل
+      app_store_connect: "anga7"   # نفس الاسم اللي اخترته عند إعداد التكامل
     environment:
       groups:
         - ios_code_signing
