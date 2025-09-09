@@ -1,10 +1,8 @@
-﻿ <Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		  <TargetFrameworks Condition="'$(CI)' == 'true'">net9.0-ios</TargetFrameworks>
-  <!-- للتطوير المحلي -->
-  <TargetFrameworks Condition="'$(CI)' != 'true'">net9.0-android;net9.0-ios</TargetFrameworks>
-  
+		<TargetFrameworks Condition="'$(CI)' == 'true'">net9.0-ios</TargetFrameworks>
+		<TargetFrameworks Condition="'$(CI)' != 'true'">net9.0-android;net9.0-ios</TargetFrameworks>
 
 		<OutputType>Exe</OutputType>
 		<RootNamespace>Ang7</RootNamespace>
@@ -12,7 +10,6 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-
 
 		<!-- Display name -->
 		<ApplicationTitle>أنجح</ApplicationTitle>
@@ -24,10 +21,7 @@
 		<ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
 		<ApplicationVersion>16</ApplicationVersion>
 
-		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
-		<!-- LK -->
-		<!--<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>-->
 		
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
@@ -50,53 +44,36 @@
 	  <AndroidPackageFormat>aab</AndroidPackageFormat>
 	</PropertyGroup>
 
-	<!-- IOS Debug Mode Emulator 
+	<!-- إعدادات iOS المحسّنة -->
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
-		<RuntimeIdentifiers>iossimulator-x64</RuntimeIdentifiers>
-  		<PlatformTarget>x64</PlatformTarget>
-	</PropertyGroup> -->
-	<!-- iOS Physical Device 
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
-    	<RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
-    	<PlatformTarget>arm64</PlatformTarget>
-	</PropertyGroup>-->
-
-	<!-- IOS Release Mode  *ISAANG7* 
-		<RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
-  		<PlatformTarget>arm64</PlatformTarget>
-
-	  	<ProvisioningType>manual</ProvisioningType>
-		<CodesignKey>Apple Distribution: Mohand Ibrahim (ULC59MPPVW)</CodesignKey>
-		<CodesignProvision>dev</CodesignProvision>-->
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
+		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+		<PlatformTarget>arm64</PlatformTarget>
 		<Aot>true</Aot>
 		<EnableLLVM>true</EnableLLVM>
 		<MtouchExtraArgs>--aot-options=-O=gsharedvt</MtouchExtraArgs>
 		<EnableTrimAnalyzer>false</EnableTrimAnalyzer>
+		<UseInterpreter>false</UseInterpreter>
 		
+		<!-- إعدادات Code Signing -->
+		<EnableCodeSigning Condition="'$(CI)' == 'true'">true</EnableCodeSigning>
+		<CodesignEntitlements>Platforms/iOS/Entitlements.plist</CodesignEntitlements>
+	</PropertyGroup>
 
-	</PropertyGroup>
-	
-
-	 <!--IOS
-	 <PropertyGroup>
-		<SatelliteResourceLanguages>ar</SatelliteResourceLanguages>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-		<MtouchLink>None</MtouchLink>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+	<!-- إعدادات iOS للإصدار -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Release' AND '$(TargetFramework)' == 'net9.0-ios'">
+		<BuildIpa>true</BuildIpa>
+		<ArchiveOnBuild>true</ArchiveOnBuild>
 		<MtouchLink>SdkOnly</MtouchLink>
+		<OptimizationPreference>Speed</OptimizationPreference>
 		<PublishTrimmed>true</PublishTrimmed>
+		<TrimMode>partial</TrimMode>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
-	  <BuildIpa>True</BuildIpa>
-	  <MtouchDebug>True</MtouchDebug>
+
+	<!-- إعدادات iOS للتطوير -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug' AND '$(TargetFramework)' == 'net9.0-ios'">
+		<MtouchLink>None</MtouchLink>
+		<MtouchDebug>true</MtouchDebug>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-	  <BuildIpa>True</BuildIpa>
-	  <MtouchDebug>True</MtouchDebug>
-	</PropertyGroup>-->
 	 
 	<ItemGroup>
 		<!-- App Icon -->
@@ -155,6 +132,5 @@
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.116.1" />
 		<PackageReference Include="Vitvov.Maui.PDFView" Version="1.5.0" />
 	</ItemGroup>
-	
 	
 </Project>
