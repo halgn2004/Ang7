@@ -4,8 +4,12 @@ workflows:
     integrations:
       app_store_connect: "anga7"
     environment:
-      groups:
-        - ios_code_signing
+      ios_signing:
+        provisioning_profiles:
+          - angah_provisioning
+          # - ...
+        certificates:
+          - angah_certific
       vars:
         DOTNET_VERSION: "9.0.100"
         PROJECT_PATH: "Ang7.csproj"
