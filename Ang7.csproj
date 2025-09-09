@@ -62,9 +62,7 @@
 		<EnableTrimAnalyzer>false</EnableTrimAnalyzer>
 		<UseInterpreter>false</UseInterpreter>
 		
-		<!-- إعدادات Code Signing -->
-		<EnableCodeSigning Condition="'$(CI)' == 'true'">true</EnableCodeSigning>
-		<CodesignEntitlements>Platforms/iOS/info.plist</CodesignEntitlements>
+
 	</PropertyGroup>
 
 	<!-- إعدادات iOS للإصدار -->
