@@ -46,8 +46,9 @@ scripts:
       dotnet publish $PROJECT_PATH -f net9.0-ios -c Release \
         -p:RuntimeIdentifier=ios-arm64 \
         -o ./artifacts/ios/
-        
-   publishing:
+    artifacts:
+      - ./artifacts/ios/**/*.ipa
+    publishing:
       app_store_connect:
         auth: integration
         submit_to_testflight: true
