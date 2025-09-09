@@ -15,15 +15,16 @@ workflows:
         DOTNET_CLI_TELEMETRY_OPTOUT: "1"
         APP_STORE_APPLE_ID: "6738999691"
         BUNDLE_ID: "com.onmediawll.ang7"
+        CI: "true"  # متغير لتحديد بيئة CI/CD
 
     scripts:
       - name: Install .NET SDK
         script: |
           wget https://dot.net/v1/dotnet-install.sh
           chmod +x dotnet-install.sh
-          ./dotnet-install.sh --install-dir $DOTNET_PATH --channel 9.0
+          ./dotnet-install.sh --install-dir $DOTNET_PATH --channel 8.0
 
-      - name: Install MAUI workloads
+      - name: Install MAUI workloads for iOS only
         script: |
           $DOTNET nuget locals all --clear
           $DOTNET workload install ios maui \
@@ -37,7 +38,7 @@ workflows:
           PLIST_BUDDY=/usr/libexec/PlistBuddy
           $PLIST_BUDDY -c "Add :ITSAppUsesNonExemptEncryption bool false" $PLIST
 
-      - name: Build iOS app
+      - name: Clean and Build iOS app
         script: |
           # الحصول على آخر build number
           LATEST_BUILD_NUMBER=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID")
@@ -52,13 +53,18 @@ workflows:
           PROFILE_NAME=$(find ~/Library/MobileDevice/Provisioning\ Profiles -name "*.mobileprovision" -execdir sh -c '/usr/libexec/PlistBuddy -c "print :Name" /dev/stdin <<< $(security cms -D -i {})' \;)
           
           # طباعة المتغيرات للتأكد
+          echo "CI Environment: $CI"
           echo "Build Number: $UPDATED_BUILD_NUMBER"
           echo "Certificate: $CERT_NAME"
           echo "Provisioning Profile: $PROFILE_NAME"
           
+          # تنظيف البناء السابق
+          $DOTNET clean Ang7.csproj -c Release
+          rm -rf obj bin
+          
           # بناء التطبيق لـ iOS فقط
           $DOTNET publish Ang7.csproj \
-            -f net9.0-ios \
+            -f net8.0-ios \
             -c Release \
             -r ios-arm64 \
             -p:BuildIpa=True \
