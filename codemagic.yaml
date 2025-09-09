@@ -18,17 +18,22 @@ workflows:
         CI: "true"  # متغير لتحديد بيئة CI/CD
 
     scripts:
-      - name: Install .NET SDK
+      - name: Install .NET 9 SDK
         script: |
           wget https://dot.net/v1/dotnet-install.sh
           chmod +x dotnet-install.sh
-          ./dotnet-install.sh --install-dir $DOTNET_PATH --channel 8.0
+          ./dotnet-install.sh --install-dir $DOTNET_PATH --channel 9.0
 
-      - name: Install MAUI workloads for iOS only
+      - name: Install iOS MAUI workload only
         script: |
           $DOTNET nuget locals all --clear
+          # تثبيت iOS workload فقط (بدون Android)
           $DOTNET workload install ios maui \
+            --skip-manifest-update \
             --source https://api.nuget.org/v3/index.json
+          
+          # التأكد من عدم تثبيت Android workloads
+          $DOTNET workload list
           $DOTNET --info
 
       - name: Set Info.plist values
@@ -38,7 +43,14 @@ workflows:
           PLIST_BUDDY=/usr/libexec/PlistBuddy
           $PLIST_BUDDY -c "Add :ITSAppUsesNonExemptEncryption bool false" $PLIST
 
-      - name: Clean and Build iOS app
+      - name: Restore packages for iOS only
+        script: |
+          # استعادة الحزم لـ iOS فقط
+          $DOTNET restore Ang7.csproj \
+            --runtime ios-arm64 \
+            --verbosity normal
+
+      - name: Build iOS app
         script: |
           # الحصول على آخر build number
           LATEST_BUILD_NUMBER=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID")
@@ -62,19 +74,27 @@ workflows:
           $DOTNET clean Ang7.csproj -c Release
           rm -rf obj bin
           
-          # بناء التطبيق لـ iOS فقط
+          # بناء التطبيق لـ iOS فقط مع تحديد target framework صراحة
+          $DOTNET build Ang7.csproj \
+            --framework net9.0-ios \
+            --configuration Release \
+            --runtime ios-arm64 \
+            --verbosity normal
+          
+          # نشر التطبيق
           $DOTNET publish Ang7.csproj \
-            -f net8.0-ios \
-            -c Release \
-            -r ios-arm64 \
+            --framework net9.0-ios \
+            --configuration Release \
+            --runtime ios-arm64 \
+            --no-build \
             -p:BuildIpa=True \
             -p:ApplicationDisplayVersion="1.1.6" \
             -p:ApplicationVersion=$UPDATED_BUILD_NUMBER \
             -p:CodesignKey="$CERT_NAME" \
             -p:CodesignProvision="$PROFILE_NAME" \
             -p:EnableCodeSigning=true \
-            --self-contained \
-            -o ./artifacts
+            -p:ArchiveOnBuild=true \
+            --output ./artifacts
 
     artifacts:
       - ./artifacts/*.ipa
