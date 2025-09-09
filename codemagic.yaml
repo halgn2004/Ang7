@@ -7,47 +7,48 @@ workflows:
       ios_signing:
         provisioning_profiles:
           - angah_provisioning
-          # - ...
         certificates:
           - angah_certific
       vars:
         DOTNET_VERSION: "9.0.100"
         PROJECT_PATH: "Ang7.csproj"
-        DOTNET_ROOT: "$HOME/.dotnet"
         DOTNET_CLI_TELEMETRY_OPTOUT: "1"
-scripts:
-  - name: Install .NET SDK (user-local)
-    script: |
-      curl -L https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
-      chmod +x dotnet-install.sh
-      ./dotnet-install.sh --version $DOTNET_VERSION
-      export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
-      dotnet --version
 
-  - name: Verify dotnet install
-    script: |
-      export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
-      which dotnet
-      dotnet --version
+    scripts:
+      - name: Install .NET SDK (user-local)
+        script: |
+          curl -L https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+          chmod +x dotnet-install.sh
+          ./dotnet-install.sh --version $DOTNET_VERSION
+          export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"
+          dotnet --version
 
-  - name: Install .NET MAUI workloads
-    script: |
-      export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
-      dotnet workload install maui --skip-manifest-update --verbosity minimal
+      - name: Verify .NET installation
+        script: |
+          export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"
+          which dotnet
+          dotnet --version
 
-  - name: Restore dependencies
-    script: |
-      export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
-      dotnet restore $PROJECT_PATH
+      - name: Install .NET MAUI workloads
+        script: |
+          export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"
+          dotnet workload install maui --skip-manifest-update --verbosity minimal
 
-  - name: Build iOS
-    script: |
-      export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
-      dotnet publish $PROJECT_PATH -f net9.0-ios -c Release \
-        -p:RuntimeIdentifier=ios-arm64 \
-        -o ./artifacts/ios/
+      - name: Restore dependencies
+        script: |
+          export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"
+          dotnet restore $PROJECT_PATH
+
+      - name: Build iOS
+        script: |
+          export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"
+          dotnet publish $PROJECT_PATH -f net9.0-ios -c Release \
+            -p:RuntimeIdentifier=ios-arm64 \
+            -o ./artifacts/ios/
+
     artifacts:
       - ./artifacts/ios/**/*.ipa
+
     publishing:
       app_store_connect:
         auth: integration
