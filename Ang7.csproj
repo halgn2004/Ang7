@@ -64,7 +64,7 @@
 		
 		<!-- إعدادات Code Signing -->
 		<EnableCodeSigning Condition="'$(CI)' == 'true'">true</EnableCodeSigning>
-		<CodesignEntitlements>Platforms/iOS/Entitlements.plist</CodesignEntitlements>
+		<CodesignEntitlements>Platforms/iOS/info.plist</CodesignEntitlements>
 	</PropertyGroup>
 
 	<!-- إعدادات iOS للإصدار -->
