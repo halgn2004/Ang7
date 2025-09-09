@@ -32,6 +32,14 @@
 		<DefaultLanguage>ar</DefaultLanguage>
 	</PropertyGroup>
 	
+	<!-- استثناء ملفات Android في بيئة CI -->
+	<ItemGroup Condition="'$(CI)' == 'true'">
+		<Compile Remove="Platforms/Android/**/*.cs" />
+		<None Remove="Platforms/Android/**/*" />
+		<AndroidResource Remove="Platforms/Android/**/*" />
+		<AndroidAsset Remove="Platforms/Android/**/*" />
+	</ItemGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
 	  <AndroidPackageFormat>aab</AndroidPackageFormat>
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
